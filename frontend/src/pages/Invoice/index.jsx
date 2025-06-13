@@ -29,6 +29,18 @@ export default function Invoice() {
       dataIndex: ['client', 'name'],
     },
     {
+      title: translate('P.O No.'),
+      dataIndex: 'purchaseOrderNumber',
+      render: (value) => value || '-',
+    },
+    {
+      title: translate('P.O Date'),
+      dataIndex: 'purchaseOrderDate',
+      render: (date) => {
+        return date ? dayjs(date).format(dateFormat) : '-';
+      },
+    },
+    {
       title: translate('HSN/SAC code'),
       render: (_, record) => record.items?.[0]?.hsnSacCode ?? '-',
     },
@@ -41,7 +53,7 @@ export default function Invoice() {
     },
     {
       title: translate('Payment Due Date'),
-      dataIndex: 'paymentdueDate',
+      dataIndex: 'expiredDate',
       render: (date) => {
         return dayjs(date).format(dateFormat);
       },

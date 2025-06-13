@@ -55,6 +55,7 @@ const invoiceSchema = new mongoose.Schema({
       //   ref: 'Product',
       //   // required: true,
       // },
+
       itemName: {
         type: String,
         required: true,
@@ -168,6 +169,15 @@ const invoiceSchema = new mongoose.Schema({
       },
     },
   ],
+  purchaseOrderNumber: {
+    type: String,
+    require: true,
+    match: /^[a-zA-Z0-9\-\/]+$/,
+  },
+  purchaseOrderDate: {
+    type: Date,
+    required: true,
+  },
   updated: {
     type: Date,
     default: Date.now,

@@ -451,6 +451,8 @@ const lang = {
   proforma_invoices: 'quote',
   search: 'search',
   hsnSacCode: 'HSN/SAC code',
+  poNo: 'P.O No.',
+  poDate: 'P.O Date',
 };
 
 export default lang;

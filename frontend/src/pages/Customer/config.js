@@ -9,7 +9,7 @@ export const fields = {
   address: {
     type: 'string',
   },
-  gstin: {
+  gstno: {
     type: 'string',
   },
   phone: {

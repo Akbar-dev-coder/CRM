@@ -301,7 +301,7 @@ function FormElement({ field, feedback, setFeedback }) {
     url: <Input addonBefore="http://" autoComplete="off" placeholder="www.example.com" />,
     textarea: <TextArea rows={4} />,
     email: <Input autoComplete="off" placeholder="email@example.com" />,
-    gstin: <Input autoComplete="off" placeholder="Enter GSTIN" />,
+    gstno: <Input autoComplete="off" placeholder="Enter GST NO" />,
     number: <InputNumber style={{ width: '100%' }} />,
     phone: <Input style={{ width: '100%' }} placeholder="+1 123 456 789" />,
     boolean: (
@@ -346,7 +346,7 @@ function FormElement({ field, feedback, setFeedback }) {
     textarea: 'string',
     number: 'number',
     phone: 'string',
-    gstin: 'string',
+    gstno: 'string',
     //boolean: 'boolean',
     // method: 'method',
     // regexp: 'regexp',

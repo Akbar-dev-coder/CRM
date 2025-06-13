@@ -42,7 +42,9 @@ export default function Settings() {
     {
       key: 'currency_settings',
       label: translate('Currency Settings'),
-      icon: <DollarOutlined />,
+      // icon: <DollarOutlined />,
+      icon: <span style={{ fontWeight: 'bold', fontSize: '16px', paddingRight: '10px' }}>₹</span>,
+
       children: <MoneyFormatSettings />,
     },
     {

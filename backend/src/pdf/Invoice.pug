@@ -1,337 +1,7 @@
-//- doctype html
-//- html
-//-   head
-//-     link(rel="shortcut icon" type="image/png" href="/images/icons/favicon.png")
-//-     meta(name="viewport" content="width=device-width, initial-scale=1")
-//-     style.
-//-       .sheet {
-//-         margin: 0;
-//-         width: 100%; 
-//-         height: 297mm;
-//-       }
-
-//-       body{
-//-         width: 100%; 
-//-         margin: 0;
-//-         padding: 0px ;
-//-         background: #ffffff;
-//-         font-family: sans-serif;
-//-         font-size:12px;
-//-         color:#222
-//-       }
-//-       *, *:before, *:after {
-//-         box-sizing: inherit;
-//-         color:#222
-//-       }
-
-//-       .clearfix {
-//-         display: block; }
-//-       //- .invoice-container {
-//-       //-   position: relative;
-//-       //-   margin: 0 auto;
-//-       //-   color: #001028;
-//-       //-   background: #fff;
-//-       //-   font-size: 10px;
-//-       //- }
-//-       .left{
-//-         float:left;
-//-       }
-//-       .right{
-//-         float:right;
-//-       }
-//-       .top-area {    
-//-         display: block;
-//-         width:100%;
-        
-//-       }
-//-       alignRight :{
-//-         text-align: right !important;
-//-       }
-//-       alignLeft :{
-//-         text-align: left;
-//-       }
-//-       .logo {
-//-         width: 200px;
-//-       }
-//-       .company-info{
-//-         text-align: right;
-//-         font-size:12px;
-//-       }
-//-       h1.invoice{
-//-         font-size:32px;
-//-         color:#52008c;
-//-         margin-top:0;
-//-       }
-//-       p.strong{
-//-         font-weight:700;
-//-       }
-//-       .billTo p {
-//-         text-align: right !important;
-//-         float:right;
-//-         display:block;
-//-         font-size:12px;
-//-         width:100%;
-//-         margin-top:0;
-//-         margin-bottom:10px;
-        
-//-       }
-
-//-       .tableHeader{
-//-         color:#52008c;
-//-       }
-//-       .clearfix {
-//-         display: block; }
-//-       .col {
-//-         float:left;
-//-       }
-//-       .col-1 {
-//-         width: 4.16667%; }
-
-//-       .col-2 {
-//-         width: 8.33333%; }
-
-//-       .col-3 {
-//-         width: 12.5%; }
-
-//-       .col-4 {
-//-         width: 16.66667%; }
-
-//-       .col-5 {
-//-         width: 20.83333%; }
-
-//-       .col-6 {
-//-         width: 25%; }
-
-//-       .col-7 {
-//-         width: 29.16667%; }
-
-//-       .col-8 {
-//-         width: 33.33333%; }
-
-//-       .col-9 {
-//-         width: 37.5%; }
-
-//-       .col-10 {
-//-         width: 41.66667%; }
-
-//-       .col-11 {
-//-         width: 45.83333%; }
-
-//-       .col-12 {
-//-         width: 50%; }
-
-//-       .col-13 {
-//-         width: 54.16667%; }
-
-//-       .col-14 {
-//-         width: 58.33333%; }
-
-//-       .col-15 {
-//-         width: 62.5%; }
-
-//-       .col-16 {
-//-         width: 66.66667%; }
-
-//-       .col-17 {
-//-         width: 70.83333%; }
-
-//-       .col-18 {
-//-         width: 75%; }
-
-//-       .col-19 {
-//-         width: 79.16667%; }
-
-//-       .col-20 {
-//-         width: 83.33333%; }
-
-//-       .col-21 {
-//-         width: 87.5%; }
-
-//-       .col-22 {
-//-         width: 91.66667%; }
-
-//-       .col-23 {
-//-         width: 95.83333%; }
-
-//-       .col-24 {
-//-         width: 100%; }
-//-       .space {
-//-         margin-top: 30px;
-//-         margin-bottom: 40px;
-//-         width:100%;
-//-       }
-//-       .top-area .number-invoice > h1 {
-//-         font-weight: 500;
-//-       }
-//-       .about-invoice {
-//-         padding: 0px 15px;
-//-         margin-top: 10px;
-//-         font-size: 13px;
-//-       }
-//-       .project-invoice {
-//-         float: left;
-//-         margin-bottom: 10px;
-//-       }
-//-       .project-invoice span {
-//-         color: #5d6975;
-//-         text-align: right;
-//-         width: 52px;
-//-         margin-right: 10px;
-//-         display: inline-block;
-//-         font-size: 0.8em;
-//-       }
-//-       .company-invoice {
-//-         float: right;
-//-         text-align: right;
-//-         margin-bottom: 60px;
-//-       }
-//-       .project-invoice div, .company-invoice div {
-//-         white-space: nowrap;
-//-         margin: 5px auto;
-//-       }
-//-       .table-invoice {
-//-         width: 100%;
-//-         border-collapse: collapse;
-//-         border-spacing: 0;
-//-         margin-bottom: 20px;
-//-       }
-//-       .table-invoice tr:nth-child(2n-1) td {
-//-         background: #fcfeff;
-//-       }
-//-       .table-invoice th, .table-invoice td {
-//-         text-align: center;
-//-       }
-//-       .table-invoice th {
-//-         padding: 8px 10px;
-//-         border-bottom: 1px solid #c2e0f2;
-//-         color:#52008c;
-//-         white-space: nowrap;
-//-         font-weight: 700;
-//-         font-size: 12px;
-//-         text-align: right;
-//-       }
-//-       tbody{
-//-         border-bottom: 1px solid #c2e0f2;
-//-       }
-//-       .table-invoice .service, .table-invoice .desc {
-//-         text-align: left;
-//-       }
-//-       .table-invoice td {
-//-         padding: 10px ;
-//-         text-align: right;
-//-         font-size: 11px;
-//-       }
-//-       .table-invoice td.service, .table-invoice td.desc {
-//-         vertical-align: top;
-//-       }
-//-       .table-invoice td.unit, .table-invoice td.qty, .table-invoice td.total {
-        
-//-       }
-//-       .table-invoice td.grand {
-//-         border-top: 1px solid #5d6975;
-//-       }
-//-       .service span{
-//-         display:block;
-//-         clear:both;
-//-         width : 100%;
-//-         color:#666;
-//-         margin-top:5px;
-//-         font-size:10px;
-//-       }
-//-       .notice-invoice {
-//-         padding: 15px;
-//-       }
-//-       .notice-invoice .notice {
-//-         color: #5d6975;
-        
-//-       }
-//-       .footer-invoice {
-//-         margin-top:30px
-//-         color: #5d6975;
-//-         width: 100%;
-//-         position: absolute;
-//-         bottom: 0;
-        
-//-         padding: 20px 0;
-//-         text-align: center;
-//-       }
- 
-//-   body
-    
-//-       header.clearfix
-//-         .top-area
-//-           img.logo.left(src=settings.public_server_file+settings.company_logo)
-//-           .right.company-info
-//-               p.strong #{settings.company_name}
-//-               p #{settings.company_address}
-//-               p #{settings.company_reg_number}
-              
-//-         .col.col-24
-//-           .space  
-//-         .left.col-14
-//-             h1.invoice
-//-               | #{translate('invoice')}
-//-             div 
-//-               .col.col-7
-//-                 p.strong #{translate('Date')} :
-//-                 p #{moment(model.date).format(dateFormat)}
-//-               .col.col-9
-//-                 p.strong #{translate('Payment Due Date')} :
-//-                 p #{moment(model.expiredDate).format(dateFormat)}
-//-               .col.col-8 
-//-                 p.strong #{translate('invoice Number')} :
-//-                 p  #{model.number}
-              
-//-         .right.col-10
-//-             .billTo
-//-                 p #{translate('Client')} :
-//-                 p #{model.client.name}
-//-                 p #{model.client.address}
-//-                 p #{model.client.phone}
-//-                 p #{model.client.email}
-//-                 p #{model.client.gstin}
-//-         .col.col-24
-//-           .space  
-//-       main
-//-         table.table-invoice
-//-           thead
-//-             tr.tableHeader
-//-               th.service #{translate('item')}
-//-               th #{translate('HSN/SAC code')}
-//-               th #{translate('Quantity')}
-//-               th #{translate('PRICE')}
-//-               th #{translate('TOTAL')}
-             
-//-           tbody
-//-             each item in model.items
-//-               tr
-//-                 td.service #{item.itemName}
-//-                   span #{item.description}
-//-                 td.qty #{item.hsnSacCode}
-//-                 td.qty #{item.quantity} 
-                
-//-                 td.unit  #{moneyFormatter({amount:item.price})}
-//-                 td.total #{moneyFormatter({amount:item.total})}
-//-             tr
-//-               td(colspan='3') #{translate('SUB TOTAL')}
-//-               td.total #{moneyFormatter({amount:model.subTotal})}
-//-             tr
-//-               td(colspan='3') #{translate('TAX')} #{model.taxRate} %
-//-               td.total #{moneyFormatter({amount:model.taxTotal})}
-//-             tr
-//-               td.grand.total(colspan='3')  #{translate('TOTAL')} 
-//-               td.grand.total #{moneyFormatter({amount:model.total})}
-        
-//-       .col.col-24
-//-           .space     
-//-       footer.footer-invoice
-//-         //- | Invoice was created on a computer and is valid without the signature and seal.
-          
-
-   doctype html
 
 html
     head
+        link(rel="shortcut icon" type="image/png" href="public/uploads/setting/logo.png")
         meta(charset="utf-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         style.
@@ -351,26 +21,44 @@ html
             p {
                 font-size: 14px
             }
+            p.invoice {
+                padding-top: 15px;
+            }
             .header {
+                width: 100%;
+                box-sizing: border-box;
                 background: #00d3e0;
                 color: white;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                gap:10px;
                 padding: 20px;
             }
-            .logo img {
-                height: 50px;
+            .logo-container {
+                display: flex;
+                align-items: center;
             }
-            .title h1 {
-                margin: 0;
-                color: #002d70;
-                font-size: 32px;
+            .logo {
+                height: 60px;
+                margin-right: 15px;
+            }
+            .title {
+                font-size: 30px;
+                font-weight: bold;
+                color: #001f4d; 
+                text-align: right;
             }
             p.border {
                 border-bottom: 2px solid #00d3e0;
                 padding-bottom: 5px;
                 margin: 0;
+            }
+            p.bg1 {
+                color:#8f882e; 
+            }
+            p.bg2 {
+                color:#734080; 
             }
             .section {
                 width: 100%;
@@ -389,10 +77,7 @@ html
                 text-align: right;
                 font-size: 16px;
             }
-            p.phone {
-                margin-top: 10px;
-            }
-            p.gst {
+            p.phone,p.email,p.gst, p.po,p.pd {
                 padding-top: 10px;
             }
             .section p {
@@ -402,6 +87,9 @@ html
                 font-size: 18px;
                 font-weight: bold;
             }
+            p.due {
+                padding-top: 65px;
+            } 
             td.none {
                 display: none;
             }
@@ -453,60 +141,76 @@ html
                 float: right;
                 text-align: right;
             }
+            td.cap {
+                 text-transform: uppercase;
+            }
+            .div {
+                width: 100%;
+                padding: 20px;
+                display: flex;
+                box-sizing: border-box;
+            }
+
+
+
 
     body
         .sheet
             .header
-                .logo
-                    img(src=settings.public_server_file+settings.company_logo) 
+                .logo-container
+                    img.logo(src=settings.public_server_file+settings.company_logo) 
                 .title
                     h1 INVOICE
 
             .section
                 .left 
-                    p.strong.border Invoice To:
+                    p.strong.border.bg1 Invoice To:
                     p.strong #{model.client.name}
                     p #{model.client.address}
                     p.phone Phone: #{model.client.phone}                
                     p.email Email: #{model.client.email}
-                    p.gst GSTIN: #{model.client.gstin}
+                    p.gst GST NO: #{model.client.gstno}
+                    p.po P.O No.: #{model.purchaseOrderNumber} 
+                    p.pd P.O Date: #{moment(model.purchaseOrderDate).format(dateFormat)}
                     p.strong.invoice Invoice Date: #{moment(model.date).format(dateFormat)}
                 .right 
-                    p.strong.border Invoice From:
+                    p.strong.border.bg2 Invoice From:
                     p.strong #{settings.company_name}
                     p #{settings.company_address}
-                    p.gst GSTIN: #{settings.company_reg_number}
-                    p.strong #{translate('Invoice Number')} - #{model.number}
-                    p Total Due: #{moneyFormatter({amount: model.total})}
-                    p #{translate('Payment Due Date')} : #{moment(model.expiredDate).format(dateFormat)}
-
+                    p.gst GST NO: #{settings.company_reg_number}
+                    p.strong.invoice #{translate('Invoice Number')} - #{model.number}
+                    p.strong Total Due: #{moneyFormatter({amount: model.total})}
+                    p.strong.due #{translate('Payment Due Date')} : #{moment(model.expiredDate).format(dateFormat)}       
             table.table
                 thead
                     tr
-                        th DESCRIPTION
+                        th SR NO.
+                        th ITEM
                         th HSN/SAC code
                         th QTY
                         th UNIT PRICE
                         th TOTAL
                 tbody
+                    - var srNO = 1;
                     each item in model.items
                         tr
+                            td #{srNO++}
                             td #{item.itemName}
                             td #{item.hsnSacCode}
                             td #{item.quantity}
                             td #{moneyFormatter({amount:item.price})}
                             td #{moneyFormatter({amount:item.total})}
                     tr
-                        td(colspan="3")
-                        td #{translate('SUB TOTAL')}
+                        td(colspan="4")
+                        td.cap #{translate('SUB TOTAL')}
                         td #{moneyFormatter({amount:model.subTotal})}
                     tr
-                        td(colspan="3")
-                        td #{translate('GST')} #{model.taxRate} %
+                        td(colspan="4")
+                        td.cap #{translate('IGST')} #{model.taxRate} %
                         td #{moneyFormatter({amount:model.taxTotal})}
                     tr
-                        td(colspan="3")
-                        td.net-amount #{translate('NET AMOUNT')}:
+                        td(colspan="4")
+                        td.net-amount.cap #{translate('NET AMOUNT')}:
                         td #{moneyFormatter({amount:model.total})}
 
             .footer

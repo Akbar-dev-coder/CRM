@@ -14,11 +14,12 @@ const useMoney = () => {
   //   ? money_format_settings
   //   : storePersist.get('settings')?.money_format_settings;
 
-  function currencyFormat({ amount, currency_code= money_format_state?.currency_code }) {
+  function currencyFormat({ amount, currency_code = money_format_state?.currency_code }) {
     const value = currency(amount, {
       separator: money_format_state?.thousand_sep,
       decimal: money_format_state?.decimal_sep,
       symbol: '',
+      pattern: '#',
       precision: money_format_state?.cent_precision,
     });
 

@@ -1,4 +1,5 @@
 const currencyList = [
+  'INR',
   'USD',
   'CAD',
   'EUR',
@@ -47,7 +48,6 @@ const currencyList = [
   'HUF',
   'IDR',
   'ILS',
-  'INR',
   'IQD',
   'IRR',
   'ISK',
@@ -114,7 +114,7 @@ const currencyList = [
   'VES',
   'VND',
   'XAF',
-  'XCD',  
+  'XCD',
   'XOF',
   'YER',
   'ZAR',

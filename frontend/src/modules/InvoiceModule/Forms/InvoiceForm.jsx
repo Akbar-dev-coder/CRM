@@ -171,6 +171,34 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             <Input />
           </Form.Item>
         </Col>
+        <Col className="gutter-row" span={8}>
+          <Form.Item
+            label={translate('P.O No.')}
+            name="purchaseOrderNumber"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input placeholder={translate('Enter Purchase Order Number')} />
+          </Form.Item>
+        </Col>
+
+        <Col className="gutter-row" span={6}>
+          <Form.Item
+            label={translate('P.O Date')}
+            name="purchaseOrderDate"
+            rules={[
+              {
+                required: true,
+                type: 'object',
+              },
+            ]}
+          >
+            <DatePicker style={{ width: '100%' }} format={dateFormat} />
+          </Form.Item>
+        </Col>
       </Row>
       <Divider dashed />
       <Row gutter={[12, 12]} style={{ position: 'relative' }}>
