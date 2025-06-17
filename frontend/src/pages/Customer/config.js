@@ -11,6 +11,7 @@ export const fields = {
   },
   gstno: {
     type: 'string',
+    label: 'GST No.',
   },
   phone: {
     type: 'phone',
