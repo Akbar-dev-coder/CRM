@@ -206,6 +206,14 @@ html
                         td #{moneyFormatter({amount:model.subTotal})}
                     tr
                         td(colspan="4")
+                        td.cap CGST (#{model.cgstRate || 0} %)
+                        td #{moneyFormatter({amount: model.cgstAmount || 0})}
+                    tr
+                        td(colspan="4")
+                        td.cap SGST (#{model.sgstRate || 0} %)
+                        td #{moneyFormatter({amount: model.sgstAmount || 0})}
+                    tr
+                        td(colspan="4")
                         td.cap #{translate('IGST')} #{model.taxRate} %
                         td #{moneyFormatter({amount:model.taxTotal})}
                     tr

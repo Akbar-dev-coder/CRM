@@ -453,6 +453,10 @@ const lang = {
   hsnSacCode: 'HSN/SAC code',
   poNo: 'P.O No.',
   poDate: 'P.O Date',
+  vendor: 'Vendor',
+  vendor_list: 'Vendor List',
+  add_new_vendor: 'Add New Vendor',
+  download: 'Download',
 };
 
 export default lang;

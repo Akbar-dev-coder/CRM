@@ -25,6 +25,7 @@ const paginatedList = async (Model, req, res) => {
     .skip(skip)
     .limit(limit)
     .sort({ [sortBy]: sortValue })
+    .lean()
     .populate()
     .exec();
 

@@ -36,11 +36,13 @@ export default function UpdateForm({ config, formElements, withUpload = false })
     if (fieldsValue.file && withUpload) {
       fieldsValue.file = fieldsValue.file[0].originFileObj;
     }
+
+    const formattedValues = unflattenFields(fieldsValue);
     // const trimmedValues = Object.keys(fieldsValue).reduce((acc, key) => {
     //   acc[key] = typeof fieldsValue[key] === 'string' ? fieldsValue[key].trim() : fieldsValue[key];
     //   return acc;
     // }, {});
-    dispatch(crud.update({ entity, id, jsonData: fieldsValue, withUpload }));
+    dispatch(crud.update({ entity, id, jsonData: formattedValues, withUpload }));
   };
   useEffect(() => {
     if (current) {
@@ -121,4 +123,18 @@ export default function UpdateForm({ config, formElements, withUpload = false })
       </Loading>
     </div>
   );
+}
+
+function unflattenFields(values) {
+  const nested = {};
+  for (const key in values) {
+    if (key.includes('_')) {
+      const [parent, child] = key.split('_');
+      if (!nested[parent]) nested[parent] = {};
+      nested[parent][child] = values[key];
+    } else {
+      nested[key] = values[key];
+    }
+  }
+  return nested;
 }

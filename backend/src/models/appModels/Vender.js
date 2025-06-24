@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
 const venderSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
+  removed: {
+    type: Boolean,
+    default: false,
   },
-  companyName: {
+  enabled: {
+    type: Boolean,
+    default: true,
+  },
+  name: {
     type: String,
     required: true,
     trim: true,
@@ -29,42 +32,47 @@ const venderSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  bankingDetails: {
-    accountNumber: {
-      type: String,
-      trim: true,
-    },
-    ifscCode: {
-      type: String,
-      trim: true,
-    },
-    bankName: {
-      type: String,
-      trim: true,
-    },
-    branchName: {
-      type: String,
-      trim: true,
-    },
+  accountNumber: {
+    type: String,
+    trim: true,
+  },
+  swiftCode: {
+    type: String,
+    trim: true,
+  },
+  ifscCode: {
+    type: String,
+    trim: true,
+  },
+  bankName: {
+    type: String,
+    trim: true,
+  },
+  branchName: {
+    type: String,
+    trim: true,
   },
   address: {
     type: String,
     trim: true,
   },
-  isActive: {
-    type: Boolean,
-    trim: true,
+  createdBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Admin',
   },
-  createdAt: {
+  updatedAt: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Admin',
+  },
+  created: {
     type: Date,
     default: Date.now,
   },
-  updatedAt: {
+  updated: {
     type: Date,
     default: Date.now,
   },
 });
 
-const Vender = mongoose.model('Vender', venderSchema);
-
-module.exports = Vender;
+venderSchema.plugin(require('mongoose-autopopulate'));
+module.exports = mongoose.model('Vender', venderSchema);

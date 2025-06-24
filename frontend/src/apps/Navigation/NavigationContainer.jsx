@@ -60,8 +60,8 @@ function Sidebar({ collapsible, isMobile = false }) {
     },
     {
       key: 'vender',
-      icon: <CustomerServiceOutlined />,
-      label: <Link to={'/vender'}>{translate('Venders')}</Link>,
+      icon: <ShopOutlined />,
+      label: <Link to={'/vender'}>{translate('Vendors')}</Link>,
     },
 
     {
