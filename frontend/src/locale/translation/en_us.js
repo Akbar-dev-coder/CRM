@@ -457,6 +457,7 @@ const lang = {
   vendor_list: 'Vendor List',
   add_new_vendor: 'Add New Vendor',
   download: 'Download',
+  tax_type: 'Tax Type',
 };
 
 export default lang;

@@ -279,12 +279,12 @@ export default function DataTable({ config, extra = [] }) {
                 items: [
                   {
                     key: 'excel',
-                    label: 'Download as Excel',
+                    label: 'Excel',
                     icon: <DownloadOutlined />,
                   },
                   {
                     key: 'pdf',
-                    label: 'Download as PDF',
+                    label: 'PDF',
                     icon: <DownloadOutlined />,
                   },
                 ],

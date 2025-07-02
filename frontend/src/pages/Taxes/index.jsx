@@ -6,6 +6,7 @@ import { Switch } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import CrudModule from '@/modules/CrudModule/CrudModule';
 import TaxForm from '@/forms/TaxForm';
+import { render } from 'react-dom';
 
 export default function Taxes() {
   const translate = useLanguage();
@@ -40,6 +41,13 @@ export default function Taxes() {
     {
       title: translate('Name'),
       dataIndex: 'taxName',
+    },
+    {
+      title: translate('Type'),
+      dataIndex: 'taxType',
+      render: (_, record) => {
+        return <>{record.taxType}</>;
+      },
     },
     {
       title: translate('Value'),

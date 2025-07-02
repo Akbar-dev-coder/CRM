@@ -5,7 +5,7 @@ let pdf = require('html-pdf');
 const { listAllSettings, loadSettings } = require('@/middlewares/settings');
 const { getData } = require('@/middlewares/serverData');
 const useLanguage = require('@/locale/useLanguage');
-const { useMoney, useDate } = require('@/settings') ;
+const { useMoney, useDate } = require('@/settings');
 
 const pugFiles = ['invoice', 'offer', 'quote', 'payment'];
 

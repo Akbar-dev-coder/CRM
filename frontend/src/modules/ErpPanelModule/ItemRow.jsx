@@ -76,8 +76,10 @@ export default function ItemRow({ field, remove, current = null }) {
         </Form.Item>
       </Col>
       <Col className="gutter-row" span={4}>
-        <Form.Item name={[field.name, 'hsnSacCode']}>
-          
+        <Form.Item
+          name={[field.name, 'hsnSacCode']}
+          rules={[{ required: true, massage: 'Missing HSN Code' }]}
+        >
           <Input placeholder="Enter HSN Code" />
         </Form.Item>
       </Col>

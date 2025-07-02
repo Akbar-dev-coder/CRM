@@ -33,35 +33,65 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
   const translate = useLanguage();
   const { dateFormat } = useDate();
   const { last_invoice_number } = useSelector(selectFinanceSettings);
-  const [total, setTotal] = useState(0);
-  const [taxRate, setTaxRate] = useState(0);
-  const [taxTotal, setTaxTotal] = useState(0);
   const [currentYear, setCurrentYear] = useState(() => new Date().getFullYear());
   const [lastNumber, setLastNumber] = useState(() => last_invoice_number + 1);
 
-  const handelTaxChange = (value) => {
-    setTaxRate(value / 100);
-  };
-
   useEffect(() => {
     if (current) {
-      const { taxRate = 0, year, number } = current;
-      setTaxRate(taxRate / 100);
+      const { year, number } = current;
       setCurrentYear(year);
       setLastNumber(number);
     }
   }, [current]);
-  useEffect(() => {
-    const currentTotal = calculate.add(calculate.multiply(subTotal, taxRate), subTotal);
-    setTaxTotal(Number.parseFloat(calculate.multiply(subTotal, taxRate)));
-    setTotal(Number.parseFloat(currentTotal));
-  }, [subTotal, taxRate]);
 
   const addField = useRef(false);
 
   useEffect(() => {
     addField.current.click();
   }, []);
+
+  const [cgstRate, setCgstRate] = useState(0);
+  const [sgstRate, setSgstRate] = useState(0);
+  const [igstRate, setIgstRate] = useState(0);
+
+  const [cgstAmount, setCgstAmount] = useState(0);
+  const [sgstAmount, setSgstAmount] = useState(0);
+  const [igstAmount, setIgstAmount] = useState(0);
+
+  const [total, setTotal] = useState(0);
+  const [taxTotal, setTaxTotal] = useState(0);
+  // const [taxRate, setTaxRate] = useState(0);
+
+  // const handelTaxChange = (value) => {
+  //   setTaxRate(value / 100);
+  // };
+
+  // useEffect(() => {
+  //   if (current) {
+  //     const { taxRate = 0, year, number } = current;
+  //     setTaxRate(taxRate / 100);
+  //     setCurrentYear(year);
+  //     setLastNumber(number);
+  //   }
+  // }, [current]);
+  // useEffect(() => {
+
+  //   const currentTotal = calculate.add(calculate.multiply(subTotal, taxRate), subTotal);
+  //   setTaxTotal(Number.parseFloat(calculate.multiply(subTotal, taxRate)));
+  //   setTotal(Number.parseFloat(currentTotal));
+  // }, [subTotal, taxRate]);
+  useEffect(() => {
+    const cgst = calculate.multiply(subTotal, cgstRate);
+    const sgst = calculate.multiply(subTotal, sgstRate);
+    const igst = calculate.multiply(subTotal, igstRate);
+    const totalTax = calculate.add(cgst, calculate.add(sgst, igst));
+    const currentTotal = calculate.add(subTotal, totalTax);
+    setCgstAmount(cgst);
+    setSgstAmount(sgst);
+    setIgstAmount(igst);
+    setTaxTotal(totalTax);
+    setTotal(currentTotal);
+  }, [subTotal, cgstRate, sgstRate, igstRate]);
 
   return (
     <>
@@ -268,6 +298,94 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
           </Col>
         </Row>
         <Row gutter={[12, -5]}>
+          <Col span={4} offset={15}>
+            <Form.Item name="cgstRate">
+              <SelectAsync
+                entity={'taxes'}
+                outputValue="taxValue"
+                displayLabels={['taxName', 'taxValue']}
+                filterField="taxType"
+                filterValue="CGST"
+                onChange={(value) => setCgstRate(value / 100)}
+                withRedirect={true}
+                urlToRedirect="/taxes"
+                redirectLabel={translate('Add New Tax')}
+                placeholder="Select CGST"
+                customLabelRender={(record) =>
+                  `${record.taxType?.toUpperCase()}(${record.taxValue}%)`
+                }
+              />
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <MoneyInputFormItem readOnly value={cgstAmount} />
+          </Col>
+        </Row>
+        <Row gutter={[12, -5]}>
+          <Col span={4} offset={15}>
+            <Form.Item name="sgstRate">
+              <SelectAsync
+                entity={'taxes'}
+                outputValue="taxValue"
+                displayLabels={['taxName', 'taxValue']}
+                filterField="taxType"
+                filterValue="SGST"
+                onChange={(value) => setSgstRate(value / 100)}
+                withRedirect={true}
+                urlToRedirect="/taxes"
+                redirectLabel={translate('Add New Tax')}
+                placeholder="Select SGST"
+                customLabelRender={(record) =>
+                  `${record.taxType?.toUpperCase()}(${record.taxValue}%)`
+                }
+              />
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <MoneyInputFormItem readOnly value={sgstAmount} />
+          </Col>
+        </Row>
+        <Row gutter={[12, -5]}>
+          <Col span={4} offset={15}>
+            <Form.Item name="igstRate">
+              <SelectAsync
+                entity={'taxes'}
+                outputValue="taxValue"
+                displayLabels={['taxName', 'taxValue']}
+                filterField="taxType"
+                filterValue="IGST"
+                onChange={(value) => setIgstRate(value / 100)}
+                withRedirect={true}
+                urlToRedirect="/taxes"
+                redirectLabel={translate('Add New Tax')}
+                placeholder="Select IGST"
+                customLabelRender={(record) =>
+                  `${record.taxType?.toUpperCase()}(${record.taxValue}%)`
+                }
+              />
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <MoneyInputFormItem readOnly value={igstAmount} />
+          </Col>
+        </Row>
+        <Row gutter={[12, -5]}>
+          <Col span={4} offset={15}>
+            <p style={{ textAlign: 'right' }}>Total Tax :</p>
+          </Col>
+          <Col span={5}>
+            <MoneyInputFormItem readOnly value={taxTotal} />
+          </Col>
+        </Row>
+        <Row gutter={[12, -5]}>
+          <Col span={4} offset={15}>
+            <p style={{ textAlign: 'right' }}>Total :</p>
+          </Col>
+          <Col span={5}>
+            <MoneyInputFormItem readOnly value={total} />
+          </Col>
+        </Row>
+        {/* <Row gutter={[12, -5]}>
           <Col className="gutter-row" span={4} offset={15}>
             <Form.Item
               name="taxRate"
@@ -293,8 +411,8 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
           <Col className="gutter-row" span={5}>
             <MoneyInputFormItem readOnly value={taxTotal} />
           </Col>
-        </Row>
-        <Row gutter={[12, -5]}>
+        </Row> */}
+        {/* <Row gutter={[12, -5]}>
           <Col className="gutter-row" span={4} offset={15}>
             <p
               style={{
@@ -310,7 +428,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
           <Col className="gutter-row" span={5}>
             <MoneyInputFormItem readOnly value={total} />
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </>
   );

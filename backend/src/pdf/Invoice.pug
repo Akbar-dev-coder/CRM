@@ -206,16 +206,25 @@ html
                         td #{moneyFormatter({amount:model.subTotal})}
                     tr
                         td(colspan="4")
-                        td.cap CGST (#{model.cgstRate || 0} %)
-                        td #{moneyFormatter({amount: model.cgstAmount || 0})}
+                        td.cap CGST #{model.cgstRate}%
+                        if model.cgstAmount > 0
+                            td #{moneyFormatter({amount: model.cgstAmount})}
+                        else 
+                            td -
                     tr
                         td(colspan="4")
-                        td.cap SGST (#{model.sgstRate || 0} %)
-                        td #{moneyFormatter({amount: model.sgstAmount || 0})}
+                        td.cap SGST #{model.sgstRate}%
+                        if model.sgstAmount > 0
+                            td #{moneyFormatter({amount: model.sgstAmount})}
+                        else 
+                            td -
                     tr
                         td(colspan="4")
-                        td.cap #{translate('IGST')} #{model.taxRate} %
-                        td #{moneyFormatter({amount:model.taxTotal})}
+                        td.cap #{translate('IGST')} #{model.igstRate}%
+                        if model.igstAmount > 0
+                            td #{moneyFormatter({amount:model.igstAmount})}
+                        else 
+                            td -
                     tr
                         td(colspan="4")
                         td.net-amount.cap #{translate('NET AMOUNT')}:

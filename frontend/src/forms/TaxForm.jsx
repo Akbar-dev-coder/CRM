@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Form, Input, InputNumber } from 'antd';
+import { Switch, Form, Input, InputNumber, Select } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import useLanguage from '@/locale/useLanguage';
 
@@ -7,6 +7,16 @@ export default function TaxForm({ isUpdateForm = false }) {
   const translate = useLanguage();
   return (
     <>
+      <Form.Item label={translate('Tax Type')} name="taxType" rules={[{ required: true }]}>
+        <Select
+          options={[
+            { value: 'CGST', label: 'CGST' },
+            { value: 'SGST', label: 'SGST' },
+            { value: 'IGST', label: 'IGST' },
+          ]}
+        />
+      </Form.Item>
+
       <Form.Item
         label={translate('name')}
         name="taxName"

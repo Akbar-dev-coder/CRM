@@ -74,6 +74,7 @@ const invoiceSchema = new mongoose.Schema({
       },
       hsnSacCode: {
         type: Number,
+        required: true,
       },
       // discount: {
       //   type: Number,
@@ -97,10 +98,16 @@ const invoiceSchema = new mongoose.Schema({
       },
     },
   ],
-  taxRate: {
-    type: Number,
-    default: 0,
-  },
+  // taxRate: {
+  //   type: Number,
+  //   default: 0,
+  // },
+  cgstRate: { type: Number, default: 0 },
+  cgstAmount: { type: Number, default: 0 },
+  sgstRate: { type: Number, default: 0 },
+  sgstAmount: { type: Number, default: 0 },
+  igstRate: { type: Number, default: 0 },
+  igstAmount: { type: Number, default: 0 },
   subTotal: {
     type: Number,
     default: 0,

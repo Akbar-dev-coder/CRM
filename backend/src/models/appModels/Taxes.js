@@ -10,6 +10,12 @@ const schema = new mongoose.Schema({
     default: true,
   },
 
+  taxType: {
+    type: String,
+    enum: ['CGST', 'SGST', 'IGST'],
+    required: true,
+  },
+
   taxName: {
     type: String,
     required: true,
