@@ -306,7 +306,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
                 displayLabels={['taxName', 'taxValue']}
                 filterField="taxType"
                 filterValue="CGST"
-                onChange={(value) => setCgstRate(value / 100)}
+                onChange={(val) => setCgstRate((val || 0) / 100)}
                 withRedirect={true}
                 urlToRedirect="/taxes"
                 redirectLabel={translate('Add New Tax')}
@@ -330,7 +330,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
                 displayLabels={['taxName', 'taxValue']}
                 filterField="taxType"
                 filterValue="SGST"
-                onChange={(value) => setSgstRate(value / 100)}
+                onChange={(val) => setSgstRate((val || 0) / 100)}
                 withRedirect={true}
                 urlToRedirect="/taxes"
                 redirectLabel={translate('Add New Tax')}
@@ -354,7 +354,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
                 displayLabels={['taxName', 'taxValue']}
                 filterField="taxType"
                 filterValue="IGST"
-                onChange={(value) => setIgstRate(value / 100)}
+                onChange={(val) => setIgstRate((val || 0) / 100)}
                 withRedirect={true}
                 urlToRedirect="/taxes"
                 redirectLabel={translate('Add New Tax')}
