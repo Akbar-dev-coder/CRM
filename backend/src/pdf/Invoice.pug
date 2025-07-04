@@ -2,7 +2,6 @@
 html
     head
         link(rel="shortcut icon" type="image/png" href="public/uploads/setting/logo.png")
-        meta(charset="utf-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         style.
             body {
@@ -26,28 +25,26 @@ html
             }
             .header {
                 width: 100%;
+                height: 200px;
                 box-sizing: border-box;
                 background: #00d3e0;
                 color: white;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap:10px;
                 padding: 20px;
             }
             .logo-container {
-                display: flex;
-                align-items: center;
+                width: 50%;
+                float: left;
             }
             .logo {
-                height: 60px;
-                margin-right: 15px;
+                height: 100px;
+                margin-top: 50px;
             }
             .title {
-                font-size: 30px;
-                font-weight: bold;
-                color: #001f4d; 
+                width: 50%;
+                float: right;
+                font-size: 36px;
                 text-align: right;
+                font-weight: bold;
             }
             p.border {
                 border-bottom: 2px solid #00d3e0;
@@ -150,6 +147,19 @@ html
                 display: flex;
                 box-sizing: border-box;
             }
+            .row-1 {
+                width: 100%;
+            }
+            .row-2 {
+                width: 100%;
+                margin-top: 25px;
+                font-size: 16px;
+                margin-left: 15px;
+                text-align: center;
+                color: #555;
+                font-style: italic;
+            }
+
 
 
 
@@ -237,9 +247,9 @@ html
                     p.color Name: Webnaz Enterprise Private Limited
                     p.color Account No: 2402261865054702
                     p.color IFSC Code: AUBL0002616
-
                 .sign
                     p For Webnaz Enterprise Pvt. Ltd.
                     br
                     p (Authorized Signatory)
-
+        .row-2         
+            p.supply “Supply meant for export under bond or letter of undertaking without payment of Integrated Tax.”

@@ -18,8 +18,8 @@ const updateManySetting = async (req, res) => {
 
     updateDataArray.push({
       updateOne: {
-        filter: { settingKey: settingKey },
-        update: { settingValue: settingValue },
+        filter: { settingKey, settingCategory: 'company_settings' },
+        update: { $set: { settingValue } },
       },
     });
   }

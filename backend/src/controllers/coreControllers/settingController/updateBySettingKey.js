@@ -22,7 +22,7 @@ const updateBySettingKey = async (req, res) => {
     });
   }
   const result = await Model.findOneAndUpdate(
-    { settingKey },
+    { settingKey, settingCategory: 'company_settings' },
     {
       settingValue,
     },
