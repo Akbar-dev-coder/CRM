@@ -231,20 +231,20 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
         </Col>
       </Row>
       <Divider dashed />
-      <Row gutter={[12, 12]} style={{ position: 'relative' }}>
-        <Col className="gutter-row" span={3}>
+      <Row gutter={[12, 12]} style={{ position: 'relative', textAlign: 'center' }}>
+        {/* <Col className="gutter-row" span={3}>
           <p>{translate('Item')}</p>
-        </Col>
-        <Col className="gutter-row" span={4}>
+        </Col> */}
+        <Col className="gutter-row" span={5}>
           <p>{translate('Description')}</p>
         </Col>
-        <Col className="gutter-row" span={4}>
+        <Col className="gutter-row" span={5}>
           <p>{translate('HSN/SAC code')}</p>
         </Col>
         <Col className="gutter-row" span={3}>
           <p>{translate('Quantity')}</p>{' '}
         </Col>
-        <Col className="gutter-row" span={4}>
+        <Col className="gutter-row" span={5}>
           <p>{translate('Price')}</p>
         </Col>
         <Col className="gutter-row" span={3}>

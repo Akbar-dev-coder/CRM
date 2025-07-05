@@ -15,11 +15,11 @@ const invoiceSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  content: String,
-  recurring: {
-    type: String,
-    enum: ['daily', 'weekly', 'monthly', 'annually', 'quarter'],
-  },
+  // content: String,
+  // recurring: {
+  //   type: String,
+  //   enum: ['daily', 'weekly', 'monthly', 'annually', 'quarter'],
+  // },
   date: {
     type: Date,
     required: true,
@@ -56,12 +56,13 @@ const invoiceSchema = new mongoose.Schema({
       //   // required: true,
       // },
 
-      itemName: {
-        type: String,
-        required: true,
-      },
+      // itemName: {
+      //   type: String,
+      //   required: true,
+      // },
       description: {
         type: String,
+        required: true,
       },
       quantity: {
         type: Number,

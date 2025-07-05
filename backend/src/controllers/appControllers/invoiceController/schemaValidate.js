@@ -11,19 +11,17 @@ const schema = Joi.object({
   purchaseOrderNumber: Joi.string().allow(''),
   purchaseOrderDate: Joi.date().required(),
 
-  items: Joi.array()
-    .items(
-      Joi.object({
-        _id: Joi.string().allow('').optional(),
-        itemName: Joi.string().required(),
-        description: Joi.string().allow(''),
-        hsnSacCode: Joi.string().allow(''),
-        quantity: Joi.number().required(),
-        price: Joi.number().required(),
-        total: Joi.number().required(),
-      }).required()
-    )
-    .required(),
+  items: Joi.array().items(
+    Joi.object({
+      _id: Joi.string().allow('').optional(),
+      // itemName: Joi.string().required(),
+      description: Joi.string().allow(''),
+      hsnSacCode: Joi.string().allow(''),
+      quantity: Joi.number().required(),
+      price: Joi.number().required(),
+      total: Joi.number().required(),
+    }).required()
+  ),
 
   cgstRate: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
   sgstRate: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
@@ -36,7 +34,7 @@ const schema = Joi.object({
   total: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
 
   // Optional: add discount if it's part of the submission
-  discount: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
+  // discount: Joi.alternatives().try(Joi.number(), Joi.string()).optional(),
 });
 
 module.exports = schema;

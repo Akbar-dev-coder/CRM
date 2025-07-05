@@ -53,7 +53,7 @@ export default function ItemRow({ field, remove, current = null }) {
 
   return (
     <Row gutter={[12, 12]} style={{ position: 'relative' }}>
-      <Col className="gutter-row" span={3}>
+      {/* <Col className="gutter-row" span={3}>
         <Form.Item
           name={[field.name, 'itemName']}
           rules={[
@@ -69,13 +69,25 @@ export default function ItemRow({ field, remove, current = null }) {
         >
           <Input placeholder="Item Name" />
         </Form.Item>
-      </Col>
-      <Col className="gutter-row" span={4}>
-        <Form.Item name={[field.name, 'description']}>
+      </Col> */}
+      <Col className="gutter-row" span={5}>
+        <Form.Item
+          name={[field.name, 'description']}
+          rules={[
+            {
+              required: true,
+              message: 'Missing description name',
+            },
+            {
+              pattern: /^(?!\s*$)[\s\S]+$/, // Regular expression to allow spaces, alphanumeric, and special characters, but not just spaces
+              message: 'description Name must contain alphanumeric or special characters',
+            },
+          ]}
+        >
           <Input placeholder="description Name" />
         </Form.Item>
       </Col>
-      <Col className="gutter-row" span={4}>
+      <Col className="gutter-row" span={5}>
         <Form.Item
           name={[field.name, 'hsnSacCode']}
           rules={[{ required: true, massage: 'Missing HSN Code' }]}
@@ -88,7 +100,7 @@ export default function ItemRow({ field, remove, current = null }) {
           <InputNumber style={{ width: '100%' }} min={0} onChange={updateQt} />
         </Form.Item>
       </Col>
-      <Col className="gutter-row" span={4}>
+      <Col className="gutter-row" span={5}>
         <Form.Item name={[field.name, 'price']} rules={[{ required: true }]}>
           <InputNumber
             className="moneyInput"

@@ -195,7 +195,7 @@ html
                 thead
                     tr
                         th SR NO.
-                        th ITEM
+                        th DESCRIPTION
                         th HSN/SAC code
                         th QTY
                         th UNIT PRICE
@@ -205,7 +205,7 @@ html
                     each item in model.items
                         tr
                             td #{srNO++}
-                            td #{item.itemName}
+                            td #{item.description}
                             td #{item.hsnSacCode}
                             td #{item.quantity}
                             td #{moneyFormatter({amount:item.price})}
