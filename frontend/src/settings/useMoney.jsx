@@ -43,10 +43,18 @@ const useMoney = () => {
   //         }).format();
   // }
 
+  function getSymbol(currency_code) {
+    if (currency_code === 'INR') return '₹';
+    if (currency_code === 'USD') return '$';
+    return '';
+  }
+
   function moneyFormatter({ amount = 0, currency_code = money_format_state?.currency_code }) {
+    const symbols = getSymbol(currency_code);
+
     return money_format_state?.currency_position === 'before'
-      ? money_format_state?.currency_symbol + ' ' + currencyFormat({ amount, currency_code })
-      : currencyFormat({ amount, currency_code }) + ' ' + money_format_state?.currency_symbol;
+      ? ` ${symbols} ${currencyFormat({ amount, currency_code })}`
+      : ` ${currencyFormat({ amount, currency_code })}${symbols}`;
   }
 
   function amountFormatter({ amount = 0, currency_code = money_format_state?.currency_code }) {
@@ -54,6 +62,10 @@ const useMoney = () => {
   }
 
   function moneyRowFormatter({ amount = 0, currency_code = money_format_state?.currency_code }) {
+    const symbols = getSymbol(currency_code);
+
+    const formattedAmount = currencyFormat({ amount, currency_code });
+
     return {
       props: {
         style: {
@@ -65,8 +77,8 @@ const useMoney = () => {
       children: (
         <>
           {money_format_state?.currency_position === 'before'
-            ? money_format_state?.currency_symbol + ' ' + currencyFormat({ amount, currency_code })
-            : currencyFormat({ amount, currency_code }) + ' ' + money_format_state?.currency_symbol}
+            ? `${symbols} ${formattedAmount}`
+            : `${formattedAmount} ${symbols}`}
         </>
       ),
     };

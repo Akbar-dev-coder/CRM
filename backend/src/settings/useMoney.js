@@ -38,10 +38,13 @@ const useMoney = ({ settings }) => {
   //         }).format();
   // }
 
-  function moneyFormatter({ amount = 0 }) {
+  function moneyFormatter({ amount = 0, currencyCode = null }) {
+    const symbols = { INR: '₹', USD: '$' };
+    const symbol = currencyCode ? symbols[currencyCode] || currency_symbol : currency_symbol;
+
     return currency_position === 'before'
-      ? currency_symbol + ' ' + currencyFormat(amount)
-      : currencyFormat(amount) + ' ' + currency_symbol;
+      ? symbol + ' ' + currencyFormat(amount)
+      : currencyFormat(amount) + ' ' + symbol;
   }
 
   function amountFormatter({ amount = 0 }) {

@@ -38,7 +38,10 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
 
   useEffect(() => {
     if (current) {
-      const { year, number } = current;
+      const { cgstRate = 0, sgstRate = 0, igstRate = 0, year, number } = current;
+      setCgstRate(cgstRate / 100);
+      setSgstRate(sgstRate / 100);
+      setIgstRate(igstRate / 100);
       setCurrentYear(year);
       setLastNumber(number);
     }
@@ -49,6 +52,8 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
   useEffect(() => {
     addField.current.click();
   }, []);
+
+  const [invoiceCurrency, setInvoiceCurrency] = useState('INR');
 
   const [cgstRate, setCgstRate] = useState(0);
   const [sgstRate, setSgstRate] = useState(0);
@@ -68,7 +73,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
 
   // useEffect(() => {
   //   if (current) {
-  //     const { taxRate = 0, year, number } = current;
+  //     const { taxRate= 0, year, number } = current;
   //     setTaxRate(taxRate / 100);
   //     setCurrentYear(year);
   //     setLastNumber(number);
@@ -128,6 +133,23 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             ]}
           >
             <InputNumber min={1} style={{ width: '100%' }} />
+          </Form.Item>
+        </Col>
+        <Col className="gutter-row" span={3}>
+          <Form.Item
+            name="currency"
+            label="Currency"
+            rules={[{ required: true }]}
+            initialValue="INR"
+          >
+            <Select
+              value={invoiceCurrency}
+              onChange={(value) => setInvoiceCurrency(value)}
+              options={[
+                { label: 'INR ₹', value: 'INR' },
+                { label: 'USD $', value: 'USD' },
+              ]}
+            />
           </Form.Item>
         </Col>
         <Col className="gutter-row" span={3}>
@@ -255,7 +277,13 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
         {(fields, { add, remove }) => (
           <>
             {fields.map((field) => (
-              <ItemRow key={field.key} remove={remove} field={field} current={current}></ItemRow>
+              <ItemRow
+                key={field.key}
+                remove={remove}
+                field={field}
+                current={current}
+                currency={invoiceCurrency}
+              />
             ))}
             <Form.Item>
               <Button
@@ -294,7 +322,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             </p>
           </Col>
           <Col className="gutter-row" span={5}>
-            <MoneyInputFormItem readOnly value={subTotal} />
+            <MoneyInputFormItem readOnly value={subTotal} currency={invoiceCurrency} />
           </Col>
         </Row>
         <Row gutter={[12, -5]}>
@@ -318,7 +346,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             </Form.Item>
           </Col>
           <Col span={5}>
-            <MoneyInputFormItem readOnly value={cgstAmount} />
+            <MoneyInputFormItem readOnly value={cgstAmount} currency={invoiceCurrency} />
           </Col>
         </Row>
         <Row gutter={[12, -5]}>
@@ -342,7 +370,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             </Form.Item>
           </Col>
           <Col span={5}>
-            <MoneyInputFormItem readOnly value={sgstAmount} />
+            <MoneyInputFormItem readOnly value={sgstAmount} currency={invoiceCurrency} />
           </Col>
         </Row>
         <Row gutter={[12, -5]}>
@@ -366,7 +394,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             </Form.Item>
           </Col>
           <Col span={5}>
-            <MoneyInputFormItem readOnly value={igstAmount} />
+            <MoneyInputFormItem readOnly value={igstAmount} currency={invoiceCurrency} />
           </Col>
         </Row>
         <Row gutter={[12, -5]}>
@@ -374,7 +402,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             <p style={{ textAlign: 'right' }}>Total Tax :</p>
           </Col>
           <Col span={5}>
-            <MoneyInputFormItem readOnly value={taxTotal} />
+            <MoneyInputFormItem readOnly value={taxTotal} currency={invoiceCurrency} />
           </Col>
         </Row>
         <Row gutter={[12, -5]}>
@@ -382,7 +410,7 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
             <p style={{ textAlign: 'right' }}>Total :</p>
           </Col>
           <Col span={5}>
-            <MoneyInputFormItem readOnly value={total} />
+            <MoneyInputFormItem readOnly value={total} currency={invoiceCurrency} />
           </Col>
         </Row>
         {/* <Row gutter={[12, -5]}>

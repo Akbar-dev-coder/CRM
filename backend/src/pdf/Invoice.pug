@@ -189,7 +189,7 @@ html
                     p #{settings.company_address}
                     p.gst GST NO: #{settings.company_reg_number}
                     p.strong.invoice #{translate('Invoice Number')} - #{model.number}
-                    p.strong Total Due: #{moneyFormatter({amount: model.total})}
+                    p.strong Total Due: #{moneyFormatter({amount: model.total, currencyCode:model.currency})}
                     p.strong.due #{translate('Payment Due Date')} : #{moment(model.expiredDate).format(dateFormat)}       
             table.table
                 thead
@@ -208,37 +208,37 @@ html
                             td #{item.description}
                             td #{item.hsnSacCode}
                             td #{item.quantity}
-                            td #{moneyFormatter({amount:item.price})}
-                            td #{moneyFormatter({amount:item.total})}
+                            td #{moneyFormatter({amount:item.price , currencyCode:model.currency})}
+                            td #{moneyFormatter({amount:item.total , currencyCode:model.currency})}
                     tr
                         td(colspan="4")
                         td.cap #{translate('SUB TOTAL')}
-                        td #{moneyFormatter({amount:model.subTotal})}
+                        td #{moneyFormatter({amount:model.subTotal , currencyCode:model.currency})}
                     tr
                         td(colspan="4")
                         td.cap CGST #{model.cgstRate}%
                         if model.cgstAmount > 0
-                            td #{moneyFormatter({amount: model.cgstAmount})}
+                            td #{moneyFormatter({amount: model.cgstAmount , currencyCode:model.currency})}
                         else 
                             td -
                     tr
                         td(colspan="4")
                         td.cap SGST #{model.sgstRate}%
                         if model.sgstAmount > 0
-                            td #{moneyFormatter({amount: model.sgstAmount})}
+                            td #{moneyFormatter({amount: model.sgstAmount , currencyCode:model.currency})}
                         else 
                             td -
                     tr
                         td(colspan="4")
                         td.cap #{translate('IGST')} #{model.igstRate}%
                         if model.igstAmount > 0
-                            td #{moneyFormatter({amount:model.igstAmount})}
+                            td #{moneyFormatter({amount:model.igstAmount , currencyCode:model.currency})}
                         else 
                             td -
                     tr
                         td(colspan="4")
                         td.net-amount.cap #{translate('NET AMOUNT')}:
-                        td #{moneyFormatter({amount:model.total})}
+                        td #{moneyFormatter({amount:model.total , currencyCode:model.currency})}
 
             .footer
                 .bankdetails
@@ -251,5 +251,6 @@ html
                     p For Webnaz Enterprise Pvt. Ltd.
                     br
                     p (Authorized Signatory)
+    if model.currency === 'USD'                
         .row-2         
             p.supply “Supply meant for export under bond or letter of undertaking without payment of Integrated Tax.”

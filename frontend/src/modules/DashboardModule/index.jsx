@@ -152,6 +152,24 @@ export default function DashboardModule() {
             isLoading={invoiceLoading}
             data={invoiceResult?.total_undue}
           />
+          {/* <SummaryCard
+            title="USD Invoices (₹)"
+            prefix="Converted"
+            isLoading={invoiceLoading}
+            data={moneyFormatter({
+              amount: invoiceResult?.usd_summary?.totalINR,
+              currency_code: 'INR',
+            })}
+          />
+          <SummaryCard
+            title="USD Invoices ($)"
+            prefix="Original"
+            isLoading={invoiceLoading}
+            data={moneyFormatter({
+              amount: invoiceResult?.usd_summary?.totalUSD,
+              currency_code: 'USD',
+            })}
+          /> */}
         </Row>
         <div className="space30"></div>
         <Row gutter={[32, 32]}>

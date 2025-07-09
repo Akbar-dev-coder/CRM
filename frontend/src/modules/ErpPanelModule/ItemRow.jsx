@@ -5,7 +5,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { useMoney, useDate } from '@/settings';
 import calculate from '@/utils/calculate';
 
-export default function ItemRow({ field, remove, current = null }) {
+export default function ItemRow({ field, remove, current = null, currency = 'INR' }) {
   const [totalState, setTotal] = useState(undefined);
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
@@ -90,7 +90,7 @@ export default function ItemRow({ field, remove, current = null }) {
       <Col className="gutter-row" span={5}>
         <Form.Item
           name={[field.name, 'hsnSacCode']}
-          rules={[{ required: true, massage: 'Missing HSN Code' }]}
+          rules={[{ required: true, message: 'Missing HSN Code' }]}
         >
           <Input placeholder="Enter HSN Code" />
         </Form.Item>
@@ -107,8 +107,12 @@ export default function ItemRow({ field, remove, current = null }) {
             onChange={updatePrice}
             min={0}
             controls={false}
-            addonAfter={money.currency_position === 'after' ? money.currency_symbol : undefined}
-            addonBefore={money.currency_position === 'before' ? money.currency_symbol : undefined}
+            addonBefore={
+              money.currency_position === 'before' ? (currency === 'USD' ? '$' : '₹') : undefined
+            }
+            addonAfter={
+              money.currency_position === 'after' ? (currency === 'USD' ? '$' : '₹') : undefined
+            }
           />
         </Form.Item>
       </Col>
@@ -121,10 +125,14 @@ export default function ItemRow({ field, remove, current = null }) {
               value={totalState}
               min={0}
               controls={false}
-              addonAfter={money.currency_position === 'after' ? money.currency_symbol : undefined}
-              addonBefore={money.currency_position === 'before' ? money.currency_symbol : undefined}
+              addonBefore={
+                money.currency_position === 'before' ? (currency === 'USD' ? '$' : '₹') : undefined
+              }
+              addonAfter={
+                money.currency_position === 'after' ? (currency === 'USD' ? '$' : '₹') : undefined
+              }
               formatter={(value) =>
-                money.amountFormatter({ amount: value, currency_code: money.currency_code })
+                money.amountFormatter({ amount: value, currency_code: currency })
               }
             />
           </Form.Item>

@@ -4,6 +4,7 @@ const moment = require('moment');
 const Model = mongoose.model('Invoice');
 
 const { loadSettings } = require('@/middlewares/settings');
+const USD_TO_INR = 83.5;
 
 const summary = async (req, res) => {
   let defaultType = 'month';
@@ -41,13 +42,26 @@ const summary = async (req, res) => {
       },
     },
     {
+      $addFields: {
+        amountINR: {
+          $cond: [
+            {
+              $eq: ['$currency', 'USD'],
+            },
+            '$usdToINRValue',
+            '$total',
+          ],
+        },
+      },
+    },
+    {
       $facet: {
         totalInvoice: [
           {
             $group: {
               _id: null,
               total: {
-                $sum: '$total',
+                $sum: '$amountINR',
               },
               count: {
                 $sum: 1,
@@ -57,10 +71,21 @@ const summary = async (req, res) => {
           {
             $project: {
               _id: 0,
-              total: '$total',
-              count: '$count',
+              total: 1,
+              count: 1,
             },
           },
+        ],
+        usdInvoice: [
+          { $match: { currency: 'USD' } },
+          {
+            $group: {
+              _id: null,
+              totalUSD: { $sum: '$total' },
+              totalINR: { $sum: '$usdToINRValue' },
+            },
+          },
+          { $project: { _id: 0, totalUSD: 1, totalINR: 1 } },
         ],
         statusCounts: [
           {
@@ -177,12 +202,21 @@ const summary = async (req, res) => {
       },
     },
     {
+      $addFields: {
+        unpaidAmountINR: {
+          $cond: [
+            { $eq: ['$currency', 'USD'] },
+            { $subtract: ['$usdToINRValue', '$credit'] },
+            { $subtract: ['$total', '$credit'] },
+          ],
+        },
+      },
+    },
+    {
       $group: {
         _id: null,
         total_amount: {
-          $sum: {
-            $subtract: ['$total', '$credit'],
-          },
+          $sum: '$unpaidAmountINR',
         },
       },
     },
@@ -194,9 +228,12 @@ const summary = async (req, res) => {
     },
   ]);
 
+  const usdSummary = response[0].usdInvoice?.[0] || { totalUSD: 0, totalINR: 0 };
+
   const finalResult = {
     total: totalInvoices?.total,
     total_undue: unpaid.length > 0 ? unpaid[0].total_amount : 0,
+    usd_summary: usdSummary,
     type,
     performance: result,
   };

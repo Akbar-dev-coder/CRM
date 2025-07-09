@@ -123,11 +123,16 @@ const invoiceSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    default: 'NA',
+    enum: ['INR', 'USD'],
+    default: 'INR',
     uppercase: true,
     required: true,
   },
   credit: {
+    type: Number,
+    default: 0,
+  },
+  usdToINRValue: {
     type: Number,
     default: 0,
   },
@@ -177,6 +182,7 @@ const invoiceSchema = new mongoose.Schema({
       },
     },
   ],
+
   purchaseOrderNumber: {
     type: String,
     require: true,

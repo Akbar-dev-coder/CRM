@@ -10,13 +10,13 @@ const schema = Joi.object({
   date: Joi.date().required(),
   purchaseOrderNumber: Joi.string().allow(''),
   purchaseOrderDate: Joi.date().required(),
-
+  currency: Joi.string().valid('INR', 'USD').required(),
   items: Joi.array().items(
     Joi.object({
       _id: Joi.string().allow('').optional(),
       // itemName: Joi.string().required(),
       description: Joi.string().allow(''),
-      hsnSacCode: Joi.string().allow(''),
+      hsnSacCode: Joi.number().required(),
       quantity: Joi.number().required(),
       price: Joi.number().required(),
       total: Joi.number().required(),

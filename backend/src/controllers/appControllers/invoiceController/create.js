@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Model = mongoose.model('Invoice');
-
+const axios = require('axios');
 const { calculate } = require('@/helpers');
 const { increaseBySettingKey } = require('@/middlewares/settings');
 const schema = require('./schemaValidate');
@@ -19,7 +19,14 @@ const create = async (req, res) => {
     });
   }
 
-  const { items = [], cgstRate = 0, sgstRate = 0, igstRate = 0, discount = 0 } = value;
+  const {
+    items = [],
+    cgstRate = 0,
+    sgstRate = 0,
+    igstRate = 0,
+    discount = 0,
+    currency = 'INR',
+  } = value;
 
   // const { items = [], taxRate = 0, discount = 0 } = value;
 
@@ -49,6 +56,24 @@ const create = async (req, res) => {
   const taxTotal = calculate.add(cgstAmount, calculate.add(sgstAmount, igstAmount));
   const total = calculate.add(subTotal, taxTotal);
 
+  let usdToINRValue = total;
+
+  if (currency === 'USD') {
+    try {
+      const res = await axios.get(
+        `https://v6.exchangerate-api.com/v6/${process.env.EXCHANGE_RATE_API}/latest/USD`
+      );
+      const conversionRate = res.data.conversion_rates.INR;
+      usdToINRValue = calculate.multiply(total, conversionRate);
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        result: null,
+        message: 'Failed to fetch USD to INR conversion rate',
+      });
+    }
+  }
+
   // body['subTotal'] = subTotal;
   // body['taxTotal'] = taxTotal;
   // body['total'] = total;
@@ -70,6 +95,7 @@ const create = async (req, res) => {
     igstAmount,
     taxTotal,
     total,
+    usdToINRValue,
     paymentStatus,
     createdBy: req.admin._id,
 

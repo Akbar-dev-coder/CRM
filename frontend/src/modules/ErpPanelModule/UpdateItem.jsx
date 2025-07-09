@@ -51,7 +51,7 @@ export default function UpdateItem({ config, UpdateForm }) {
     },
     subTotal: 0,
     taxTotal: 0,
-    taxRate: 0,
+    // taxRate: 0,
     total: 0,
     credit: 0,
     number: 0,
@@ -83,18 +83,28 @@ export default function UpdateItem({ config, UpdateForm }) {
   const onSubmit = (fieldsValue) => {
     let dataToUpdate = { ...fieldsValue };
     if (fieldsValue) {
-      if (fieldsValue.date || fieldsValue.expiredDate) {
-        dataToUpdate.date = dayjs(fieldsValue.date).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-        dataToUpdate.expiredDate = dayjs(fieldsValue.expiredDate).format(
-          'YYYY-MM-DDTHH:mm:ss.SSSZ'
-        );
+      if (fieldsValue.date) {
+        dataToUpdate.date = dayjs(fieldsValue.date).toISOString();
       }
+      if (fieldsValue.expiredDate) {
+        dataToUpdate.expiredDate = dayjs(fieldsValue.expiredDate).toISOString();
+      }
+      if (fieldsValue.purchaseOrderDate) {
+        dataToUpdate.purchaseOrderDate = dayjs(fieldsValue.purchaseOrderDate).toISOString();
+      }
+
+      // if (fieldsValue.date || fieldsValue.expiredDate) {
+      //   dataToUpdate.date = dayjs(fieldsValue.date).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      //   dataToUpdate.expiredDate = dayjs(fieldsValue.expiredDate).format(
+      //     'YYYY-MM-DDTHH:mm:ss.SSSZ'
+      //   );
+      // }
       if (fieldsValue.items) {
         let newList = [];
-        fieldsValue.items.map((item) => {
-          const { quantity, price, itemName, description } = item;
+        fieldsValue.items.forEach((item) => {
+          const { quantity, hsnSacCode, price, itemName, description } = item;
           const total = item.quantity * item.price;
-          newList.push({ total, quantity, price, itemName, description });
+          newList.push({ total, hsnSacCode, quantity, price, itemName, description });
         });
         dataToUpdate.items = newList;
       }
@@ -121,9 +131,16 @@ export default function UpdateItem({ config, UpdateForm }) {
       if (formData.expiredDate) {
         formData.expiredDate = dayjs(formData.expiredDate);
       }
-      if (!formData.taxRate) {
-        formData.taxRate = 0;
+      if (formData.purchaseOrderDate) {
+        formData.purchaseOrderDate = dayjs(formData.purchaseOrderDate);
       }
+      if (formData.cgstRate) formData.cgstRate = formData.cgstRate * 100;
+      if (formData.sgstRate) formData.sgstRate = formData.sgstRate * 100;
+      if (formData.igstRate) formData.igstRate = formData.igstRate * 100;
+
+      // if (!formData.taxRate) {
+      //   formData.taxRate = 0;
+      // }
 
       const { subTotal } = formData;
 
