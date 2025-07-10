@@ -6,13 +6,15 @@ const path = require('path');
 // Make sure we are running node 7.6+
 const [major, minor] = process.versions.node.split('.').map(parseFloat);
 if (major < 20) {
-  console.log('Please upgrade your node.js version at least 20 or greater. 👌\n ');
-  process.exit();
+  console.warn('Please upgrade your node.js version at least 20 or greater. 👌\n ');
+  // process.exit();
 }
 
 // import environmental variables from our variables.env file
-require('dotenv').config({ path: '.env' });
-require('dotenv').config({ path: '.env.local' });
+if (process.env.NODE_ENV != 'production') {
+  require('dotenv').config({ path: '.env' });
+  require('dotenv').config({ path: '.env.local' });
+}
 
 mongoose.connect(process.env.DATABASE);
 
@@ -28,11 +30,16 @@ mongoose.connection.on('error', (error) => {
 const modelsFiles = globSync('./src/models/**/*.js');
 
 for (const filePath of modelsFiles) {
-  require(path.resolve(filePath));
+  try {
+    require(path.resolve(filePath));
+  } catch (error) {
+    console.error(`❌ Failed to load model at ${filePath}`, error);
+  }
 }
 // Start our app!
+const serverless = require('serverless-http');
 const app = require('./app');
-module.exports = app;
+module.exports = serverless(app);
 // app.set('port', process.env.PORT || 8888);
 // const server = app.listen(app.get('port'), () => {
 //   console.log(`Express running → On PORT : ${server.address().port}`);
