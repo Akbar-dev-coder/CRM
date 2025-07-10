@@ -4,7 +4,7 @@ const moment = require('moment');
 const Model = mongoose.model('Invoice');
 
 const { loadSettings } = require('@/middlewares/settings');
-const USD_TO_INR = 83.5;
+// const USD_TO_INR = 83.5;
 
 const summary = async (req, res) => {
   let defaultType = 'month';
