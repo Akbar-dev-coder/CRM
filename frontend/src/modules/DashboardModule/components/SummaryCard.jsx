@@ -60,7 +60,10 @@ export default function AnalyticSummaryCard({ title, tagColor, data, prefix, isL
                 <Spin />
               ) : (
                 <Tooltip
-                  title={data}
+                  title={moneyFormatter({
+                    amount: data,
+                    currency_code: money_format_settings?.default_currency_code,
+                  })}
                   style={{
                     direction: 'ltr',
                   }}
