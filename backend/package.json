@@ -47,7 +47,7 @@
     "nodemon": "3.0.1"
   },
   "_moduleAliases": {
-    "@": "src"
+    "@": "backend/src"
   },
   "main": "server.js",
   "author": "Akbar"
