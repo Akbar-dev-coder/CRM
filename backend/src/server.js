@@ -1,5 +1,5 @@
 require('module-alias/register');
-const serverless = require('serverless-http');
+// const serverless = require('serverless-http');
 const mongoose = require('mongoose');
 const { globSync } = require('glob');
 const path = require('path');
@@ -40,8 +40,8 @@ for (const filePath of modelsFiles) {
 // Start our app!
 
 const app = require('./app');
-module.exports = serverless(app);
-// app.set('port', process.env.PORT || 8888);
-// const server = app.listen(app.get('port'), () => {
-//   console.log(`Express running → On PORT : ${server.address().port}`);
-// });
+// module.exports = serverless(app);
+app.set('port', process.env.PORT || 8888);
+const server = app.listen(app.get('port'), () => {
+  console.log(`Express running → On PORT : ${server.address().port}`);
+});
