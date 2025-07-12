@@ -20,7 +20,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: true,
+    origin: process.env.PORT || 8888,
     credentials: true,
   })
 );
