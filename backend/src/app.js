@@ -20,7 +20,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://crm-frontend-5nrdjnndh-md-akbar-alis-projects.vercel.app",
+    origin: true,
     credentials: true,
   })
 );
