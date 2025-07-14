@@ -13,7 +13,7 @@ html
             }
             .sheet {
                 padding: 20px;
-                width: 800px;
+                width: 210mm;
                 height: 297mm;
                 margin: 0 auto;
                 box-sizing: border-box;
@@ -74,6 +74,11 @@ html
                 float: right;
                 text-align: right;
                 font-size: 16px;
+            }
+            .clearfix::after {
+                content: "";
+                display: table;
+                clear: both;
             }
             p.phone,p.email,p.gst, p.po,p.pd {
                 padding-top: 10px;
@@ -191,7 +196,8 @@ html
                     p.gst GST NO: #{settings.company_reg_number}
                     p.strong.invoice #{translate('Invoice Number')} - #{model.number}
                     p.strong Total Due: #{moneyFormatter({amount: model.total, currencyCode:model.currency})}
-                    p.strong.due #{translate('Payment Due Date')} : #{moment(model.expiredDate).format(dateFormat)}       
+                    p.strong.due #{translate('Payment Due Date')} : #{moment(model.expiredDate).format(dateFormat)}
+                .clearfix       
             table.table
                 thead
                     tr
@@ -252,6 +258,7 @@ html
                     p For Webnaz Enterprise Pvt. Ltd.
                     br
                     p (Authorized Signatory)
+                .clearfix
     if model.currency === 'USD'                
         .row-2         
             p.supply “Supply meant for export under bond or letter of undertaking without payment of Integrated Tax.”
