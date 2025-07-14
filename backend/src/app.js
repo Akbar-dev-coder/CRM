@@ -20,7 +20,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: true,
+    origin: 'https://crm-frontend-pink.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
   })
 );
