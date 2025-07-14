@@ -32,7 +32,7 @@ exports.generatePdf = async (
       // Compile Pug template
 
       const settings = await loadSettings();
-      const selectedLang = settings['idurar_app_language'];
+      const selectedLang = settings['tsn_app_language'];
       const translate = useLanguage({ selectedLang });
 
       const {
