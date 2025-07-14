@@ -18,9 +18,16 @@ const fileUpload = require('express-fileupload');
 // create our Express app
 const app = express();
 
+const allowedOrigins = ['https://crm-frontend-pink.vercel.app', 'http://localhost:3000'];
 app.use(
   cors({
-    origin: 'https://crm-frontend-pink.vercel.app',
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by cors'));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
   })
