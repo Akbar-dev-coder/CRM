@@ -64,11 +64,11 @@ const setup = async (req, res) => {
     const file = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
     const settingsToUpdate = {
-      idurar_app_email: email,
-      idurar_app_company_email: email,
-      idurar_app_timezone: timezone,
-      idurar_app_country: country,
-      idurar_app_language: language || 'en_us',
+      tsn_app_email: email,
+      tsn_app_company_email: email,
+      tsn_app_timezone: timezone,
+      tsn_app_country: country,
+      tsn_app_language: language || 'en_us',
     };
 
     const newSettings = file.map((x) => {
@@ -94,7 +94,7 @@ const setup = async (req, res) => {
   return res.status(200).json({
     success: true,
     result: {},
-    message: 'Successfully IDURAR App Setup',
+    message: 'Successfully TSN App Setup',
   });
 };
 

@@ -1,7 +1,7 @@
 const useAppSettings = () => {
   let settings = {};
-  settings['idurar_app_email'] = 'noreply@idurarapp.com';
-  settings['idurar_base_url'] = 'https://cloud.idurarapp.com';
+  settings['tsn_app_email'] = 'noreply@tsnapp.com';
+  settings['tsn_base_url'] = 'https://cloud.tsnapp.com';
   return settings;
 };
 

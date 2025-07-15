@@ -6,14 +6,14 @@ import { Provider } from 'react-redux';
 import store from '@/redux/store';
 import PageLoader from '@/components/PageLoader';
 
-const IdurarOs = lazy(() => import('./apps/IdurarOs'));
+const TsnOs = lazy(() => import('./apps/TsnOs'));
 
 export default function RoutApp() {
   return (
     <BrowserRouter>
       <Provider store={store}>
         <Suspense fallback={<PageLoader />}>
-          <IdurarOs />
+          <TsnOs />
         </Suspense>
       </Provider>
     </BrowserRouter>

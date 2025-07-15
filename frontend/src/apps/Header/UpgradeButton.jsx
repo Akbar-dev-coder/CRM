@@ -22,7 +22,7 @@
 //         }}
 //         icon={<RocketOutlined />}
 //         onClick={() => {
-//           window.open(`https://cloud.idurarapp.com`);
+//           window.open(`https://cloud.tsnapp.com`);
 //         }}
 //       >
 //         {translate('Try Entreprise Version')}
@@ -32,5 +32,5 @@
 // }
 
 // console.log(
-//   '🚀 Welcome to IDURAR ERP CRM! Did you know that we also offer commercial customization services? Contact us at hello@idurarapp.com for more information.'
+//   '🚀 Welcome to TSN ERP CRM! Did you know that we also offer commercial customization services? Contact us at hello@tsnapp.com for more information.'
 // );
