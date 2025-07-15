@@ -28,10 +28,12 @@ app.use(
         callback(new Error('Not allowed by cors'));
       }
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'UPDATE'],
     credentials: true,
   })
 );
+
+app.options('*', cors());
 
 app.use(cookieParser());
 app.use(express.json());
