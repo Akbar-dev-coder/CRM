@@ -10,5 +10,9 @@ notes.md
 # environment variables
 .env
 
+#setup
+
+setup.js
+
 #node_modules
 node_modules/
