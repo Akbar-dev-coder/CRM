@@ -25,6 +25,7 @@ const search = async (Model, req, res) => {
 
     .where('removed', false)
     .limit(20)
+    .select('-password')
     .exec();
 
   if (results.length >= 1) {

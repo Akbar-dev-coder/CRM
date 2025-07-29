@@ -26,6 +26,7 @@ const paginatedList = async (Model, req, res) => {
     .limit(limit)
     .sort({ [sortBy]: sortValue })
     .lean()
+    .select('-password')
     .populate()
     .exec();
 

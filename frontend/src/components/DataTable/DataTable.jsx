@@ -272,7 +272,7 @@ export default function DataTable({ config, extra = [] }) {
           </Button>,
 
           <AddNewItem key={`${uniqueId()}`} config={config} />,
-          ['client', 'vender'].includes(entity) && (
+          ['client', 'vender', 'employee'].includes(entity) && (
             <Dropdown
               key={'downloadDropdown'}
               menu={{

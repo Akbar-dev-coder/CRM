@@ -10,6 +10,7 @@ const listAll = async (Model, req, res) => {
       removed: false,
     })
       .sort({ created: sort })
+      .select('-password')
       .populate()
       .exec();
   } else {
@@ -18,6 +19,7 @@ const listAll = async (Model, req, res) => {
       enabled: enabled,
     })
       .sort({ created: sort })
+      .select('-password')
       .populate()
       .exec();
   }

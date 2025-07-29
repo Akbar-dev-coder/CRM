@@ -17,8 +17,10 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
     <div>
       {Object.keys(fields).map((key) => {
         let field = fields[key];
+        const shouldRenderField =
+          (!isUpdateForm && !field.disableForForm) || (isUpdateForm && !field.disableForUpdate);
 
-        if ((isUpdateForm && !field.disableForUpdate) || !field.disableForForm) {
+        if (shouldRenderField || !field.disableForShow) {
           field.name = key;
           if (!field.label) field.label = key;
           if (field.hasFeedback)
@@ -31,6 +33,7 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
             return <FormElement key={key} field={field} />;
           }
         }
+        return null;
       })}
     </div>
   );
@@ -50,13 +53,15 @@ function FormElement({ field, feedback, setFeedback }) {
       rules={[
         {
           required: field.required || false,
-          type: filedType[field.type] ?? 'any',
+          type: fieldType[field.type] ?? 'any',
         },
       ]}
     >
       <Select
+        placeholder={field.placeholder || `Select ${field.value}`}
         showSearch={field.showSearch}
         defaultValue={field.defaultValue}
+        allowClear
         style={{
           width: '100%',
         }}
@@ -79,7 +84,7 @@ function FormElement({ field, feedback, setFeedback }) {
       rules={[
         {
           required: field.required || false,
-          type: filedType[field.type] ?? 'any',
+          type: fieldType[field.type] ?? 'any',
         },
       ]}
     >
@@ -108,7 +113,7 @@ function FormElement({ field, feedback, setFeedback }) {
       rules={[
         {
           required: field.required || false,
-          type: filedType[field.type] ?? 'any',
+          type: fieldType[field.type] ?? 'any',
         },
       ]}
     >
@@ -134,7 +139,7 @@ function FormElement({ field, feedback, setFeedback }) {
       rules={[
         {
           required: field.required || false,
-          type: filedType[field.type] ?? 'any',
+          type: fieldType[field.type] ?? 'any',
         },
       ]}
     >
@@ -170,7 +175,7 @@ function FormElement({ field, feedback, setFeedback }) {
       rules={[
         {
           required: field.required || false,
-          type: filedType[field.type] ?? 'any',
+          type: fieldType[field.type] ?? 'any',
         },
       ]}
     >
@@ -197,7 +202,7 @@ function FormElement({ field, feedback, setFeedback }) {
       rules={[
         {
           required: field.required || false,
-          type: filedType[field.type] ?? 'any',
+          type: fieldType[field.type] ?? 'any',
         },
       ]}
     >
@@ -223,7 +228,7 @@ function FormElement({ field, feedback, setFeedback }) {
       rules={[
         {
           required: field.required || false,
-          type: filedType[field.type] ?? 'any',
+          type: fieldType[field.type] ?? 'any',
         },
       ]}
     >
@@ -263,7 +268,7 @@ function FormElement({ field, feedback, setFeedback }) {
         rules={[
           {
             required: field.required || false,
-            type: filedType[field.type] ?? 'any',
+            type: fieldType[field.type] ?? 'any',
           },
         ]}
       >
@@ -299,9 +304,21 @@ function FormElement({ field, feedback, setFeedback }) {
       <Input autoComplete="off" maxLength={field.maxLength} defaultValue={field.defaultValue} />
     ),
     url: <Input addonBefore="http://" autoComplete="off" placeholder="www.example.com" />,
-    textarea: <TextArea rows={4} />,
+    textarea: <TextArea rows={4} placeholder="Enter your address" />,
     email: <Input autoComplete="off" placeholder="email@example.com" />,
+    password: <Input autoComplete="off" placeholder="Enter password" />,
     gstno: <Input autoComplete="off" placeholder="Enter GST NO" />,
+    name: <Input autoComplete="off" placeholder="Enter your full name" />,
+    panno: <Input autoComplete="off" placeholder="Enter your pan number" />,
+    accno: <Input autoComplete="off" placeholder="Enter your account number" />,
+    ifsccode: <Input autoComplete="off" placeholder="Enter bank IFSC Code" />,
+    swiftcode: <Input autoComplete="off" placeholder="Enter bank swift code" />,
+    branchname: <Input autoComplete="off" placeholder="Enter branch name" />,
+    aadhaar: <Input autoComplete="off" placeholder="Enter your aadhar number" />,
+    department: <Input autoComplete="off" placeholder="What is your department" />,
+    designation: <Input autoComplete="off" placeholder="What is your designation" />,
+    employeeId: <Input autoComplete="off" placeholder="Enter employee id" />,
+    bankname: <Input autoComplete="off" placeholder="Enter bank name" />,
     number: <InputNumber style={{ width: '100%' }} />,
     phone: <Input style={{ width: '100%' }} placeholder="+1 123 456 789" />,
     boolean: (
@@ -341,7 +358,7 @@ function FormElement({ field, feedback, setFeedback }) {
     ),
   };
 
-  const filedType = {
+  const fieldType = {
     string: 'string',
     textarea: 'string',
     number: 'number',
@@ -377,7 +394,7 @@ function FormElement({ field, feedback, setFeedback }) {
         rules={[
           {
             required: field.required || false,
-            type: filedType[field.type] ?? 'any',
+            type: fieldType[field.type] ?? 'any',
           },
         ]}
         valuePropName={field.type === 'boolean' ? 'checked' : 'value'}

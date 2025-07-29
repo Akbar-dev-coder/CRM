@@ -8,7 +8,7 @@ export const fields = {
     disableForUpdate: true,
   },
   name: {
-    type: 'string',
+    type: 'name',
     required: true,
   },
   country: {
@@ -16,12 +16,12 @@ export const fields = {
     required: true,
   },
   address: {
-    type: 'string',
+    type: 'textarea',
     required: true,
     trim: true,
   },
   gstno: {
-    type: 'string',
+    type: 'gstno',
     required: true,
     label: 'GST No.',
   },

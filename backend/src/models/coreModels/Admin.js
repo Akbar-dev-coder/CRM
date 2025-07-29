@@ -6,6 +6,7 @@ const adminSchema = new Schema({
     type: Boolean,
     default: false,
   },
+
   enabled: {
     type: Boolean,
     default: false,
@@ -30,7 +31,7 @@ const adminSchema = new Schema({
   role: {
     type: String,
     default: 'owner',
-    enum: ['owner'],
+    enum: ['owner', 'employee'],
   },
 });
 

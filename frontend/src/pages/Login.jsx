@@ -23,7 +23,6 @@ const LoginPage = () => {
   const onFinish = (values) => {
     dispatch(login({ loginData: values }));
   };
-
   useEffect(() => {
     if (isSuccess) navigate('/');
   }, [isSuccess]);

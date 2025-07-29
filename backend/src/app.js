@@ -13,6 +13,7 @@ const adminAuth = require('./controllers/coreControllers/adminAuth');
 
 const errorHandlers = require('./handlers/errorHandlers');
 const erpApiRouter = require('./routes/appRoutes/appApi');
+const employeeRoutes = require('@/routes/appRoutes/ems/employeeRoutes');
 
 const fileUpload = require('express-fileupload');
 // create our Express app
@@ -51,9 +52,8 @@ app.use('/api', adminAuth.isValidAuthToken, coreApiRouter);
 app.use('/api', adminAuth.isValidAuthToken, erpApiRouter);
 app.use('/download', coreDownloadRouter);
 app.use('/public', corePublicRouter);
-app.get('/ping', (req, res) => {
-  res.send('pong');
-});
+app.use('/api/employee', employeeRoutes);
+
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
 

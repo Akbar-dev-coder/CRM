@@ -458,6 +458,9 @@ const lang = {
   add_new_vendor: 'Add New Vendor',
   download: 'Download',
   tax_type: 'Tax Type',
+  employee: 'Employee',
+  employee_list: 'Employee List',
+  add_new_employee: 'Add New Employee',
 };
 
 export default lang;

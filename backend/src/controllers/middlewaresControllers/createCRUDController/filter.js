@@ -11,6 +11,7 @@ const filter = async (Model, req, res) => {
   })
     .where(req.query.filter)
     .equals(req.query.equal)
+    .select('-password')
     .exec();
   if (!result) {
     return res.status(404).json({

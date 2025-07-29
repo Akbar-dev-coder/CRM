@@ -1,6 +1,6 @@
 export const fields = {
   srNo: {
-    type: 'number',
+    type: 'unique',
     label: 'Sr.No.',
     readOnly: true,
     table: true,
@@ -8,7 +8,7 @@ export const fields = {
     disableForUpdateL: true,
   },
   name: {
-    type: 'string',
+    type: 'name',
     required: true,
   },
   email: {
@@ -20,47 +20,47 @@ export const fields = {
     required: true,
   },
   gstNumber: {
-    type: 'string',
+    type: 'gstno',
     required: true,
     trim: true,
     label: 'GST No.',
   },
   panNumber: {
-    type: 'string',
+    type: 'panno',
     required: true,
     trim: true,
     label: 'PAN No.',
   },
   accountNumber: {
-    type: 'string',
+    type: 'accno',
     required: true,
     trim: true,
     label: 'Account Number',
   },
   ifscCode: {
-    type: 'string',
+    type: 'ifsccode',
     required: true,
     trim: true,
     label: 'IFSC Code',
   },
   swiftCode: {
-    type: 'string',
+    type: 'swiftcode',
     label: 'Bank Swift Code',
   },
   bankName: {
-    type: 'string',
+    type: 'bankname',
     required: true,
     trim: true,
     label: 'Bank Name',
   },
   branchName: {
-    type: 'string',
+    type: 'branchname',
     required: true,
     trim: true,
     label: 'Branch Name',
   },
   address: {
-    type: 'string',
+    type: 'textarea',
     required: true,
     trim: true,
   },
