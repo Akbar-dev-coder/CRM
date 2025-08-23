@@ -1,11 +1,11 @@
 export const fields = {
   srNo: {
-    type: 'number',
+    type: 'unique',
     label: 'Sr.No.',
     readOnly: true,
-    table: true,
-    disableForForm: true,
+    disableForTable: false,
     disableForUpdate: true,
+    disableForForm: true,
   },
   name: {
     type: 'name',

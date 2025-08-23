@@ -14,7 +14,9 @@ const adminAuth = require('./controllers/coreControllers/adminAuth');
 const errorHandlers = require('./handlers/errorHandlers');
 const erpApiRouter = require('./routes/appRoutes/appApi');
 const employeeRoutes = require('@/routes/appRoutes/ems/employeeRoutes');
-
+const attendanceRoutes = require('@/routes/appRoutes/ems/attendanceRoute');
+const leaveRoutes = require('@/routes/appRoutes/ems/leaveRoutes');
+const adminAttendanceRoutes = require('@/routes/appRoutes/ems/adminAttendanceRoutes');
 const fileUpload = require('express-fileupload');
 // create our Express app
 const app = express();
@@ -46,13 +48,15 @@ app.use(compression());
 // app.use(fileUpload());
 
 // Here our API Routes
-
+app.use('/api/employee', employeeRoutes);
 app.use('/api', coreAuthRouter);
+app.use('/api/attendance', attendanceRoutes);
+app.use('/api/leave', leaveRoutes);
 app.use('/api', adminAuth.isValidAuthToken, coreApiRouter);
 app.use('/api', adminAuth.isValidAuthToken, erpApiRouter);
+app.use('/api/employeeAttendance', adminAttendanceRoutes);
 app.use('/download', coreDownloadRouter);
 app.use('/public', corePublicRouter);
-app.use('/api/employee', employeeRoutes);
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);

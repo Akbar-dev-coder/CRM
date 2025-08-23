@@ -125,7 +125,7 @@ export default function DataTable({ config, extra = [] }) {
     doc.save(`${capitalize(entity)}.pdf`);
   };
 
-  const items = [
+  let items = [
     {
       label: translate('Show'),
       key: 'read',
@@ -147,6 +147,12 @@ export default function DataTable({ config, extra = [] }) {
       icon: <DeleteOutlined />,
     },
   ];
+  items = items.filter((item) => {
+    if (item.key === 'edit' && config.allowEdit === false) {
+      return false;
+    }
+    return true;
+  });
 
   const handleRead = (record) => {
     dispatch(crud.currentItem({ data: record }));
@@ -174,11 +180,19 @@ export default function DataTable({ config, extra = [] }) {
     collapsedBox.open();
   }
 
+  // let dispatchColumns = [];
+  // if (fields) {
+  //   dispatchColumns = [...dataForTable({ fields, translate, moneyFormatter, dateFormat })];
+  // } else {
+  //   dispatchColumns = [...dataTableColumns];
+  // }
+
   let dispatchColumns = [];
-  if (fields) {
+
+  if (config.dataTableColumns) {
+    dispatchColumns = [...config.dataTableColumns];
+  } else if (fields) {
     dispatchColumns = [...dataForTable({ fields, translate, moneyFormatter, dateFormat })];
-  } else {
-    dispatchColumns = [...dataTableColumns];
   }
 
   dataTableColumns = [
@@ -270,9 +284,9 @@ export default function DataTable({ config, extra = [] }) {
           <Button onClick={handelDataTableLoad} key={`${uniqueId()}`} icon={<RedoOutlined />}>
             {translate('Refresh')}
           </Button>,
+          config.allowCreate !== false && <AddNewItem key={`${uniqueId()}`} config={config} />,
 
-          <AddNewItem key={`${uniqueId()}`} config={config} />,
-          ['client', 'vender', 'employee'].includes(entity) && (
+          ['client', 'vender', 'employee', 'employeeAttendance'].includes(entity) && (
             <Dropdown
               key={'downloadDropdown'}
               menu={{

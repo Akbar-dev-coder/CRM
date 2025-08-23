@@ -3,9 +3,9 @@ export const fields = {
     type: 'unique',
     label: 'Sr.No.',
     readOnly: true,
-    table: true,
+    disableForTable: false,
+    disableForUpdate: true,
     disableForForm: true,
-    disableForUpdateL: true,
   },
   name: {
     type: 'name',

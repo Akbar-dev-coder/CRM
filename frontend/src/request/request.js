@@ -17,10 +17,16 @@ function includeToken() {
   axios.defaults.baseURL = API_BASE_URL;
 
   axios.defaults.withCredentials = true;
-  const auth = storePersist.get('auth');
 
-  if (auth) {
+  const auth = storePersist.get('auth');
+  console.log('FRONTEND includeToken DEBUG:');
+  console.log('- Auth from localStorage:', auth);
+  console.log('- Token exists:', auth?.current?.token ? 'Yes' : 'No');
+  if (auth?.current?.token) {
+    console.log('Setting Authorization header');
     axios.defaults.headers.common['Authorization'] = `Bearer ${auth.current.token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
   }
 }
 
@@ -162,7 +168,7 @@ const request = {
       query = query.slice(0, -1);
 
       const response = await axios.get(entity + '/list' + query);
-
+      console.log('attendance list', response);
       successHandler(response, {
         notifyOnSuccess: false,
         notifyOnFailed: false,

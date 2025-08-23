@@ -21,19 +21,53 @@ export default function ReadItem({ config }) {
   const { isReadBoxOpen } = state;
   const [listState, setListState] = useState([]);
 
-  if (fields) readColumns = [...dataForRead({ fields: fields, translate: translate })];
+  if (!readColumns && fields)
+    readColumns = [...dataForRead({ fields: fields, translate: translate })];
+  // useEffect(() => {
+  //   const list = [];
+  //   readColumns.map((props) => {
+  //     const propsKey = props.dataIndex;
+  //     const propsTitle = props.title;
+  //     const isDate = props.isDate || false;
+  //     let value = valueByString(currentResult, propsKey);
+  //     value = isDate ? dayjs(value).format(dateFormat) : value;
+  //     list.push({ propsKey, label: propsTitle, value: value });
+  //   });
+  //   setListState(list);
+  // }, [currentResult]);
+
+  //new logic
+
+  // ReadItem.jsx me isko use karein
+
   useEffect(() => {
-    const list = [];
-    readColumns.map((props) => {
+    if (!currentResult) return;
+    const columnsToDisplay = readColumns || dataForRead({ fields, translate });
+
+    const list = columnsToDisplay.map((props) => {
       const propsKey = props.dataIndex;
       const propsTitle = props.title;
-      const isDate = props.isDate || false;
-      let value = valueByString(currentResult, propsKey);
-      value = isDate ? dayjs(value).format(dateFormat) : value;
-      list.push({ propsKey, label: propsTitle, value: value });
+      let value;
+
+      if (props.render) {
+        // Agar custom render function hai, to usko use karo
+
+        value = props.render(currentResult);
+      } else {
+        // Warna purani logic se value nikalo
+        value = valueByString(currentResult, propsKey);
+      }
+
+      // Date formatting (agar render function nahi hai)
+      if (!props.render && props.isDate && value) {
+        value = dayjs(value).format(dateFormat);
+      }
+
+      return { propsKey, label: propsTitle, value: value || 'N/A' };
     });
+
     setListState(list);
-  }, [currentResult]);
+  }, [currentResult, readColumns, fields]);
 
   const show = isReadBoxOpen ? { display: 'block', opacity: 1 } : { display: 'none', opacity: 0 };
 

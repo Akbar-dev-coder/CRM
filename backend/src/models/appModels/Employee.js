@@ -12,7 +12,7 @@ const employeeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    name: {
+    fullName: {
       type: String,
       required: true,
     },
@@ -25,8 +25,6 @@ const employeeSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
-      trim: true,
     },
     phone: {
       type: String,
@@ -95,7 +93,7 @@ const employeeSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    salary: {
+    basicSalary: {
       type: Number,
       required: true,
     },
@@ -108,8 +106,12 @@ const employeeSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ['Employee', 'HR', 'Manager'],
+      enum: ['employee'],
       default: 'employee',
+    },
+    loggedSessions: {
+      type: [String],
+      default: [],
     },
   },
   { timestamps: true }

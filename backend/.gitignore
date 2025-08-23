@@ -7,6 +7,9 @@ notes.md
 
 *.pdf
 
+#setup files
+/backend/src/setup/setup.js
+
 # environment variables
 .env
 

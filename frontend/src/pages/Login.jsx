@@ -15,7 +15,7 @@ import AuthModule from '@/modules/AuthModule';
 
 const LoginPage = () => {
   const translate = useLanguage();
-  const { isLoading, isSuccess } = useSelector(selectAuth);
+  const { isLoading, current, isLoggedIn } = useSelector(selectAuth);
   const navigate = useNavigate();
   // const size = useSize();
 
@@ -23,9 +23,19 @@ const LoginPage = () => {
   const onFinish = (values) => {
     dispatch(login({ loginData: values }));
   };
+
   useEffect(() => {
-    if (isSuccess) navigate('/');
-  }, [isSuccess]);
+    if (isLoggedIn && current?.role) {
+      if (current.role === 'owner') {
+        navigate('/');
+      } else if (current.role === 'employee') {
+        navigate('/');
+      }
+    }
+  }, [isLoggedIn, current, navigate]);
+  // useEffect(() => {
+  //   if (isSuccess) navigate('/');
+  // }, [isSuccess]);
 
   const FormContainer = () => {
     return (

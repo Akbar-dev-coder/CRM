@@ -1,4 +1,4 @@
-import { lazy, useEffect } from 'react';
+/* import { lazy, useEffect } from 'react';
 
 import {} from 'react-router-dom';
 import {} from 'react-router-dom';
@@ -41,4 +41,41 @@ export default function AppRouter() {
   let element = useRoutes(routesList);
 
   return element;
+}
+*/
+
+import { useEffect, useMemo } from 'react';
+import { useLocation, useRoutes, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { useAppContext } from '@/context/appContext';
+import { selectAuth } from '@/redux/auth/selectors';
+import adminRoutes from './routes';
+import employeeRoutes from './EmployeeRoutes';
+
+export default function AppRouter() {
+  let location = useLocation();
+  const { appContextAction } = useAppContext();
+  const { app } = appContextAction;
+
+  const { current, isLoggedIn } = useSelector(selectAuth);
+
+  //choose which routes to show based on role
+  const routesList = useMemo(() => {
+    if (!isLoggedIn) {
+      return [{ path: '*', element: <Navigate to="/login" replace /> }];
+    }
+    if (current?.role === 'employee') {
+      return employeeRoutes;
+    }
+    return adminRoutes;
+  }, [isLoggedIn, current]);
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      app.default();
+    }
+  }, [location]);
+
+  return useRoutes(routesList);
 }

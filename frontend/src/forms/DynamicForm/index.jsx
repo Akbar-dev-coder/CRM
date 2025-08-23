@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { DatePicker, Input, Form, Select, InputNumber, Switch, Tag } from 'antd';
+import { useEffect, useState } from 'react';
+import { DatePicker, Input, Form, Select, InputNumber, Switch, Tag, TimePicker } from 'antd';
 
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import useLanguage from '@/locale/useLanguage';
@@ -9,6 +9,7 @@ import SelectAsync from '@/components/SelectAsync';
 import { generate as uniqueId } from 'shortid';
 
 import { countryList } from '@/utils/countryList';
+import dayjs from 'dayjs';
 
 export default function DynamicForm({ fields, isUpdateForm = false }) {
   const [feedback, setFeedback] = useState();
@@ -17,10 +18,8 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
     <div>
       {Object.keys(fields).map((key) => {
         let field = fields[key];
-        const shouldRenderField =
-          (!isUpdateForm && !field.disableForForm) || (isUpdateForm && !field.disableForUpdate);
 
-        if (shouldRenderField || !field.disableForShow) {
+        if ((isUpdateForm && !field.disableForUpdate) || (!isUpdateForm && !field.disableForForm)) {
           field.name = key;
           if (!field.label) field.label = key;
           if (field.hasFeedback)
@@ -33,7 +32,6 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
             return <FormElement key={key} field={field} />;
           }
         }
-        return null;
       })}
     </div>
   );
@@ -43,7 +41,7 @@ function FormElement({ field, feedback, setFeedback }) {
   const translate = useLanguage();
   const money = useMoney();
   const { dateFormat } = useDate();
-
+  const format = 'HH:mm';
   const { TextArea } = Input;
 
   const SelectComponent = () => (
@@ -307,8 +305,8 @@ function FormElement({ field, feedback, setFeedback }) {
     textarea: <TextArea rows={4} placeholder="Enter your address" />,
     email: <Input autoComplete="off" placeholder="email@example.com" />,
     password: <Input autoComplete="off" placeholder="Enter password" />,
+    fullname: <Input autoComplete="off" placeholder="Enter full Name" />,
     gstno: <Input autoComplete="off" placeholder="Enter GST NO" />,
-    name: <Input autoComplete="off" placeholder="Enter your full name" />,
     panno: <Input autoComplete="off" placeholder="Enter your pan number" />,
     accno: <Input autoComplete="off" placeholder="Enter your account number" />,
     ifsccode: <Input autoComplete="off" placeholder="Enter bank IFSC Code" />,
@@ -319,8 +317,10 @@ function FormElement({ field, feedback, setFeedback }) {
     designation: <Input autoComplete="off" placeholder="What is your designation" />,
     employeeId: <Input autoComplete="off" placeholder="Enter employee id" />,
     bankname: <Input autoComplete="off" placeholder="Enter bank name" />,
-    number: <InputNumber style={{ width: '100%' }} />,
+    number: <InputNumber style={{ width: '100%' }} prefix={'₹'} />,
     phone: <Input style={{ width: '100%' }} placeholder="+1 123 456 789" />,
+    des: <Input autoComplete="off" placeholder="Enter description" />,
+    employeeName: <Input autoComplete="off" placeholder="Enter your name" />,
     boolean: (
       <Switch
         checkedChildren={<CheckOutlined />}
@@ -333,6 +333,13 @@ function FormElement({ field, feedback, setFeedback }) {
         placeholder={translate('select_date')}
         style={{ width: '100%' }}
         format={dateFormat}
+      />
+    ),
+    time: (
+      <TimePicker
+        placeholder={translate('select time')}
+        style={{ width: '100%' }}
+        format={format}
       />
     ),
     async: (

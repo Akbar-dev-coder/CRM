@@ -4,8 +4,8 @@ export const fields = {
     label: 'Employee ID',
     required: true,
   },
-  name: {
-    type: 'name',
+  fullName: {
+    type: 'fullname',
     label: 'Full Name',
     required: true,
     trim: true,
@@ -19,11 +19,11 @@ export const fields = {
   password: {
     type: 'password',
     label: 'Password',
-    required: true,
-    trim: true,
     disableForTable: true,
     disableForUpdate: true,
-    disableForShow: true,
+    disableForForm: false,
+    required: true,
+    disableForView: true,
   },
   phone: {
     type: 'phone',
@@ -117,9 +117,9 @@ export const fields = {
     label: 'Joining Date',
     required: true,
   },
-  salary: {
+  basicSalary: {
     type: 'number',
-    label: 'Salary',
+    label: 'Basic Salary',
     required: true,
   },
   status: {
@@ -139,10 +139,6 @@ export const fields = {
     label: 'Role',
     placeholder: 'Select role',
     required: true,
-    options: [
-      { label: 'Employee', value: 'Employee' },
-      { label: 'HR', value: 'HR' },
-      { label: 'Manager', value: 'Manager' },
-    ],
+    options: [{ label: 'Employee', value: 'employee' }],
   },
 };

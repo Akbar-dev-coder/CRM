@@ -21,6 +21,7 @@ import AppRouter from '@/router/AppRouter';
 import useResponsive from '@/hooks/useResponsive';
 
 import storePersist from '@/redux/storePersist';
+import { selectAuth } from '@/redux/auth/selectors';
 
 export default function ErpCrmApp() {
   const { Content } = Layout;
@@ -32,14 +33,14 @@ export default function ErpCrmApp() {
   const { isMobile } = useResponsive();
 
   const dispatch = useDispatch();
+  const { current } = useSelector(selectAuth);
+  const { isSuccess: settingIsloaded } = useSelector(selectSettings);
 
-  useLayoutEffect(() => {
-    dispatch(settingsAction.list({ entity: 'setting' }));
-  }, []);
+  // useLayoutEffect(() => {
+  //   dispatch(settingsAction.list({ entity: 'setting' }));
+  // }, []);
 
   // const appSettings = useSelector(selectAppSettings);
-
-  const { isSuccess: settingIsloaded } = useSelector(selectSettings);
 
   // useEffect(() => {
   //   const { loadDefaultLang } = storePersist.get('firstVisit');
@@ -48,7 +49,17 @@ export default function ErpCrmApp() {
   //   }
   // }, [appSettings]);
 
-  if (settingIsloaded)
+  // only load setting for admin/owner
+
+  useLayoutEffect(() => {
+    if (current?.role === 'owner' || current?.role === 'admin') {
+      dispatch(settingsAction.list({ entity: 'setting' }));
+    }
+  }, [current?.role, dispatch]);
+  // if (!settingIsloaded && (current?.role === 'owner' || current?.role === 'admin')) {
+  //   return <PageLoader />;
+  // }
+  if (settingIsloaded || current?.role === 'employee') {
     return (
       <Layout hasSider>
         <Navigation />
@@ -86,5 +97,7 @@ export default function ErpCrmApp() {
         )}
       </Layout>
     );
-  else return <PageLoader />;
+  } else {
+    return <PageLoader />;
+  }
 }

@@ -461,6 +461,8 @@ const lang = {
   employee: 'Employee',
   employee_list: 'Employee List',
   add_new_employee: 'Add New Employee',
+  attendance: 'Attendance',
+  attendance_list: 'Attendance List',
 };
 
 export default lang;

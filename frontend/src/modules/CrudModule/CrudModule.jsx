@@ -63,15 +63,17 @@ function SidePanelTopContent({ config, formElements, withUpload }) {
           >
             {translate('remove')}
           </Button>
-          <Button
-            onClick={editItem}
-            type="text"
-            icon={<EditOutlined />}
-            size="small"
-            style={{ float: 'right', marginLeft: '0px', marginTop: '10px' }}
-          >
-            {translate('edit')}
-          </Button>
+          {config.allowEdit !== false && (
+            <Button
+              onClick={editItem}
+              type="text"
+              icon={<EditOutlined />}
+              size="small"
+              style={{ float: 'right', marginLeft: '0px', marginTop: '10px' }}
+            >
+              {translate('edit')}
+            </Button>
+          )}
         </Col>
 
         <Col span={24}>

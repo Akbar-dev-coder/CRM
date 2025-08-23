@@ -11,7 +11,9 @@ const update = async (Model, req, res) => {
       new: true, // return the new result instead of the old one
       runValidators: true,
     }
-  ).exec();
+  )
+    .select('-password')
+    .exec();
   if (!result) {
     return res.status(404).json({
       success: false,

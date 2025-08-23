@@ -1,6 +1,10 @@
-const Employee = require('@/models/appModels/ems/Employee');
+const Employee = require('@/models/appModels/Employee');
 const createCRUDController = require('@/controllers/middlewaresControllers/createCRUDController');
 
-const employeeController = createCRUDController('Employee');
+function employeeController() {
+  const methods = createCRUDController('Employee');
 
-module.exports = employeeController;
+  return methods;
+}
+
+module.exports = employeeController();

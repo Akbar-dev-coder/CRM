@@ -120,6 +120,7 @@ const SelectAsync = ({
 
   useEffect(() => {
     if (isSuccess) {
+      console.log('Fetched employee list:', result);
       const filtered =
         filterField && filterValue ? result.filter((r) => r[filterField] === filterValue) : result;
       setOptions(filtered);
@@ -127,12 +128,13 @@ const SelectAsync = ({
   }, [isSuccess]);
 
   useEffect(() => {
-    if (value?._id) {
-      setCurrentValue(value._id);
+    if (value) {
+      setCurrentValue(typeof value === 'string' ? value : value._id);
     }
   }, [value]);
 
   const handleSelectChange = (selectedId) => {
+    console.log('Selected employee ID:', selectedId);
     if (selectedId === 'redirectURL') {
       navigate(urlToRedirect);
     } else {
@@ -154,7 +156,7 @@ const SelectAsync = ({
       {selectOptions.map((option) => {
         const label = customLabelRender
           ? customLabelRender(option)
-          : displayLabels.map((x) => option[x]).join(' ');
+          : displayLabels.map((x) => option[x]) || 'no label'.join(' ') || 'no label';
         const tagColor = color.find((c) => c.color === option.color)?.color;
         return (
           <Select.Option key={option._id} value={option._id}>

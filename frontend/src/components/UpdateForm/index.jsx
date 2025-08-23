@@ -77,6 +77,55 @@ export default function UpdateForm({ config, formElements, withUpload = false })
           expiredDate: dayjs(newValues['expiredDate']),
         };
       }
+      if (newValues.attendanceDate) {
+        newValues = {
+          ...newValues,
+          attendanceDate: dayjs(newValues['attendanceDate']),
+        };
+      }
+      if (newValues.checkInDate) {
+        newValues = {
+          ...newValues,
+          checkInDate: dayjs(newValues['checkInDate']),
+        };
+      }
+      if (newValues.checkOutDate) {
+        newValues = {
+          ...newValues,
+          checkOutDate: dayjs(newValues['checkOutDate']),
+        };
+      }
+      if (newValues.checkIn) {
+        newValues = {
+          ...newValues,
+          checkIn: dayjs(newValues['checkIn'], 'HH:mm'),
+        };
+      }
+      if (newValues.checkOut) {
+        newValues = {
+          ...newValues,
+          checkOut: dayjs(newValues['checkOut'], 'HH:mm'),
+        };
+      }
+      if (newValues.appliedDate) {
+        newValues = {
+          ...newValues,
+          appliedDate: dayjs(newValues['appliedDate'], 'YY:MM:DD'),
+        };
+      }
+      if (newValues.startDate) {
+        newValues = {
+          ...newValues,
+          startDate: dayjs(newValues['startDate']),
+        };
+      }
+      if (newValues.endDate) {
+        newValues = {
+          ...newValues,
+          endDate: dayjs(newValues['endDate']),
+        };
+      }
+
       if (newValues.created) {
         newValues = {
           ...newValues,

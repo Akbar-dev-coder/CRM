@@ -10,6 +10,7 @@ export const dataForRead = ({ fields, translate }) => {
 
   Object.keys(fields).forEach((key) => {
     let field = fields[key];
+    if (field.disableForView) return;
     columns.push({
       title: field.label ? field.label : key,
       dataIndex: field.dataIndex ? field.dataIndex.join('.') : key,
