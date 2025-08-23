@@ -1,15 +1,10 @@
 const mongoose = require('mongoose');
-
 const leaveSchema = new mongoose.Schema(
   {
     employeeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Employee',
       required: true,
-    },
-    srNo: {
-      type: Number,
-      unique: true,
     },
     employeeName: {
       type: String,
@@ -31,7 +26,7 @@ const leaveSchema = new mongoose.Schema(
     totalDays: {
       type: Number,
     },
-    description: {
+    comment: {
       type: String,
       required: true,
     },

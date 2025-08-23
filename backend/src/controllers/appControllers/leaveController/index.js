@@ -1,11 +1,11 @@
 const Leave = require('@/models/appModels/Leave');
 exports.create = async (req, res) => {
   try {
-    const { employeeName, leaveType, startDate, endDate, description, totalDays } = req.body;
+    const { employeeName, leaveType, startDate, endDate, comment } = req.body;
 
     // validation
 
-    if (!employeeName || !leaveType || !startDate || !endDate || !description) {
+    if (!employeeName || !leaveType || !startDate || !endDate || !comment) {
       return res.status(400).json({
         success: false,
         message: 'All fields are required',
@@ -33,7 +33,7 @@ exports.create = async (req, res) => {
 
     //calculate total days
 
-    let totaldays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
 
     // check for overlapping leave
 
@@ -64,7 +64,7 @@ exports.create = async (req, res) => {
       startDate: start,
       endDate: end,
       totalDays,
-      description,
+      comment,
       appliedDate: new Date(),
     });
 

@@ -319,7 +319,7 @@ function FormElement({ field, feedback, setFeedback }) {
     bankname: <Input autoComplete="off" placeholder="Enter bank name" />,
     number: <InputNumber style={{ width: '100%' }} prefix={'₹'} />,
     phone: <Input style={{ width: '100%' }} placeholder="+1 123 456 789" />,
-    des: <Input autoComplete="off" placeholder="Enter description" />,
+    comment: <Input autoComplete="off" placeholder="Enter your comment" />,
     employeeName: <Input autoComplete="off" placeholder="Enter your name" />,
     boolean: (
       <Switch

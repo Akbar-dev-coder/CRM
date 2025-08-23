@@ -33,9 +33,9 @@ export const fields = {
     disableForUpdate: true,
     disableForForm: true,
   },
-  description: {
-    type: 'des',
-    label: 'Description',
+  comment: {
+    type: 'comment',
+    label: 'Comment',
     required: true,
   },
   appliedDate: {
