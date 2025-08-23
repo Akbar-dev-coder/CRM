@@ -51,7 +51,22 @@ export default function DataTable({ config, extra = [] }) {
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
+  // flatten data for employeeId
+
+  const flattenDataForExport = (data) => {
+    return data.map((row) => {
+      const newRow = {
+        ...row,
+      };
+      if (row.employeeId && typeof row.employeeId === 'object') {
+        newRow.employeeId = row.employeeId.employeeId || 'N/A';
+      }
+      return newRow;
+    });
+  };
   const handleDownloadExcel = () => {
+    const flattenedDataSource = flattenDataForExport(dataSource);
+
     const exportColumn = dataTableColumns.filter((col) => col.dataIndex);
     const exportkey = exportColumn.map((col) => col.dataIndex);
     const headerMap = exportColumn.reduce((acc, col) => {
@@ -59,7 +74,7 @@ export default function DataTable({ config, extra = [] }) {
       return acc;
     }, {});
 
-    const cleanData = dataSource.map((row) => {
+    const cleanData = flattenedDataSource.map((row) => {
       const filterRow = {};
       exportkey.forEach((key) => {
         filterRow[headerMap[key]] = row[key];
@@ -74,6 +89,8 @@ export default function DataTable({ config, extra = [] }) {
   };
 
   const handleDownloadPDF = () => {
+    const flattenedDataSource = flattenDataForExport(dataSource);
+
     const doc = new jsPDF();
     const exportColumns = dataTableColumns.filter((col) => col.dataIndex);
     const exportKey = exportColumns.map((col) => col.dataIndex);
@@ -83,7 +100,7 @@ export default function DataTable({ config, extra = [] }) {
     }, {});
 
     const tableColumns = exportKey.map((key) => headerMap[key]);
-    const tableRows = dataSource.map((row) => exportKey.map((key) => row[key]));
+    const tableRows = flattenedDataSource.map((row) => exportKey.map((key) => row[key]));
 
     doc.setFontSize(16);
     doc.setTextColor('#333333');
