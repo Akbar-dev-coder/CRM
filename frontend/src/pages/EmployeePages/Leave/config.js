@@ -26,13 +26,13 @@ export const fields = {
     label: 'To',
     required: true,
   },
-  totalDays: {
-    type: 'totaldays',
-    label: 'Total Days',
-    disableForTable: false,
-    disableForUpdate: true,
-    disableForForm: true,
-  },
+  // totalDays: {
+  //   type: 'totaldays',
+  //   label: 'Total Days',
+  //   disableForTable: false,
+  //   disableForUpdate: true,
+  //   disableForForm: true,
+  // },
   comment: {
     type: 'comment',
     label: 'Comment',

@@ -33,7 +33,7 @@ exports.create = async (req, res) => {
 
     //calculate total days
 
-    const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    // const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
 
     // check for overlapping leave
 
@@ -63,7 +63,7 @@ exports.create = async (req, res) => {
       leaveType,
       startDate: start,
       endDate: end,
-      totalDays,
+      // totalDays,
       comment,
       appliedDate: new Date(),
     });
