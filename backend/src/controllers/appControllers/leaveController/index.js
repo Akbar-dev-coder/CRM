@@ -1,11 +1,21 @@
 const Leave = require('@/models/appModels/Leave');
+const Employee = require('@/models/appModels/Employee');
+
 exports.create = async (req, res) => {
   try {
-    const { employeeName, leaveType, startDate, endDate, comment } = req.body;
+    const { leaveType, startDate, endDate, comment } = req.body;
+
+    // Get employee details from the logged-in user
+    const employee = await Employee.findById(req.user._id);
+    if (!employee) {
+      return res.status(404).json({
+        success: false,
+        message: 'Employee not found',
+      });
+    }
 
     // validation
-
-    if (!employeeName || !leaveType || !startDate || !endDate || !comment) {
+    if (!leaveType || !startDate || !endDate || !comment) {
       return res.status(400).json({
         success: false,
         message: 'All fields are required',
@@ -13,7 +23,6 @@ exports.create = async (req, res) => {
     }
 
     //validate date
-
     const start = new Date(startDate);
     const end = new Date(endDate);
 
@@ -31,12 +40,7 @@ exports.create = async (req, res) => {
       });
     }
 
-    //calculate total days
-
-    // const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-
     // check for overlapping leave
-
     const overlappingLeave = await Leave.findOne({
       employeeId: req.user._id,
       status: { $in: ['Pending', 'Approved'] },
@@ -55,20 +59,16 @@ exports.create = async (req, res) => {
       });
     }
 
-    // creare Leave request
-
+    // Create Leave request with auto-filled employee name
     const leave = await Leave.create({
       employeeId: req.user._id,
-      employeeName,
+      employeeName: employee.fullName, // Auto-fill from employee record
       leaveType,
       startDate: start,
       endDate: end,
-      // totalDays,
       comment,
       appliedDate: new Date(),
     });
-
-    //populate employee details for response
 
     return res.status(200).json({
       success: true,
@@ -84,6 +84,7 @@ exports.create = async (req, res) => {
     });
   }
 };
+
 exports.list = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -98,7 +99,11 @@ exports.list = async (req, res) => {
 
     const totalCount = await Leave.countDocuments(query);
 
-    const leaves = await Leave.find(query).sort({ appliedDate: -1 }).skip(skip).limit(limit);
+    const leaves = await Leave.find(query)
+      .populate('employeeId', ' fullName employeeId') // Populate employee details
+      .sort({ appliedDate: -1 })
+      .skip(skip)
+      .limit(limit);
 
     return res.status(200).json({
       success: true,
@@ -121,13 +126,12 @@ exports.list = async (req, res) => {
 };
 
 // Get single leave request
-
 exports.read = async (req, res) => {
   try {
     const leave = await Leave.findOne({
       _id: req.params.id,
       employeeId: req.user._id,
-    });
+    }).populate('employeeId', 'fullName employeeId'); // Populate employee details
 
     if (!leave) {
       return res.status(400).json({
@@ -152,13 +156,11 @@ exports.read = async (req, res) => {
 };
 
 // Employee updates their own leave (only if pending)
-
 exports.update = async (req, res) => {
   try {
-    const { leaveType, startDate, endDate, description } = req.body;
+    const { leaveType, startDate, endDate, comment } = req.body;
 
     // find the leave request
-
     const existingLeave = await Leave.findOne({
       _id: req.params.id,
       employeeId: req.user._id,
@@ -172,7 +174,6 @@ exports.update = async (req, res) => {
     }
 
     // Only allow updates if status is pending
-
     if (existingLeave.status !== 'Pending') {
       return res.status(400).json({
         success: false,
@@ -181,12 +182,10 @@ exports.update = async (req, res) => {
     }
 
     //update data
-
     let updateData = {};
 
     if (leaveType) updateData.leaveType = leaveType;
-    if (description) updateData.description = description;
-
+    if (comment) updateData.comment = comment;
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
@@ -206,9 +205,12 @@ exports.update = async (req, res) => {
       }
       updateData.startDate = start;
       updateData.endDate = end;
-      updateData.totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     }
-    const leave = await Leave.findByIdAndUpdate(req.params.id, updateData, { new: true });
+
+    const leave = await Leave.findByIdAndUpdate(req.params.id, updateData, { new: true }).populate(
+      'employeeId',
+      'fullName employeeId'
+    );
 
     return res.status(200).json({
       success: true,
@@ -226,7 +228,6 @@ exports.update = async (req, res) => {
 };
 
 // Employee deletes their own leave (only if pending)
-
 exports.delete = async (req, res) => {
   try {
     const leave = await Leave.findOne({
@@ -242,11 +243,10 @@ exports.delete = async (req, res) => {
     }
 
     // Only allow deletion if status is pending
-
     if (leave.status !== 'Pending') {
       return res.status(400).json({
         success: false,
-        message: 'Cannot delete leave request that has already been  processed',
+        message: 'Cannot delete leave request that has already been processed',
       });
     }
 

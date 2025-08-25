@@ -1,6 +1,6 @@
 export const fields = {
   name: {
-    type: 'fullname',
+    type: 'employeeName',
     required: true,
   },
 

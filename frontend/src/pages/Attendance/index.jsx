@@ -30,7 +30,9 @@ export default function Attendance() {
     },
     {
       title: 'Employee Name',
-      dataIndex: 'name',
+      dataIndex: 'employeeId',
+      key: 'employeeName',
+      render: (name) => name?.fullName || 'N/A',
     },
     {
       title: 'Attendance Date',
@@ -81,8 +83,9 @@ export default function Attendance() {
       render: (item) => item.employeeId?.employeeId || 'N/A',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Employee Name',
+      dataIndex: 'employeeName',
+      render: (name) => name.employeeId?.fullName || 'N/A',
     },
     {
       title: 'Attendance Date',

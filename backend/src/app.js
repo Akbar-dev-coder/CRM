@@ -17,6 +17,8 @@ const employeeRoutes = require('@/routes/appRoutes/ems/employeeRoutes');
 const attendanceRoutes = require('@/routes/appRoutes/ems/attendanceRoute');
 const leaveRoutes = require('@/routes/appRoutes/ems/leaveRoutes');
 const adminAttendanceRoutes = require('@/routes/appRoutes/ems/adminAttendanceRoutes');
+const adminLeaveController = require('@/routes/appRoutes/ems/adminLeaveRoutes');
+
 const fileUpload = require('express-fileupload');
 // create our Express app
 const app = express();
@@ -55,6 +57,7 @@ app.use('/api/leave', leaveRoutes);
 app.use('/api', adminAuth.isValidAuthToken, coreApiRouter);
 app.use('/api', adminAuth.isValidAuthToken, erpApiRouter);
 app.use('/api/employeeAttendance', adminAttendanceRoutes);
+app.use('/api/employeeLeave', adminLeaveController);
 app.use('/download', coreDownloadRouter);
 app.use('/public', corePublicRouter);
 

@@ -168,7 +168,7 @@ const request = {
       query = query.slice(0, -1);
 
       const response = await axios.get(entity + '/list' + query);
-      console.log('attendance list', response);
+      console.log('leave list', response);
       successHandler(response, {
         notifyOnSuccess: false,
         notifyOnFailed: false,

@@ -69,6 +69,11 @@ function Sidebar({ collapsible, isMobile = false }) {
       label: <Link to="/attendence">{translate('employee attendance')}</Link>,
     },
     {
+      key: 'leave',
+      icon: <FileSyncOutlined />,
+      label: <Link to="/leave">{translate('leave requests')}</Link>,
+    },
+    {
       key: 'invoice',
       icon: <ContainerOutlined />,
       label: <Link to="/invoice">{translate('invoices')}</Link>,

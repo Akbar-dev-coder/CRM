@@ -8,7 +8,6 @@ const leaveSchema = new mongoose.Schema(
     },
     employeeName: {
       type: String,
-      required: true,
     },
     leaveType: {
       type: String,
@@ -38,6 +37,10 @@ const leaveSchema = new mongoose.Schema(
     appliedDate: {
       type: Date,
       default: Date.now,
+    },
+    adminComment: {
+      type: String,
+      default: ' ',
     },
   },
   { timestamps: true }

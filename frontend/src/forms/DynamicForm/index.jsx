@@ -10,9 +10,16 @@ import { generate as uniqueId } from 'shortid';
 
 import { countryList } from '@/utils/countryList';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '@/redux/auth/selectors';
 
 export default function DynamicForm({ fields, isUpdateForm = false }) {
   const [feedback, setFeedback] = useState();
+  const currentUser = useSelector(selectCurrentUser);
+
+  // Debug log
+  console.log('DynamicForm - Current User:', currentUser);
+  console.log('DynamicForm - Fields:', fields);
 
   return (
     <div>
@@ -22,14 +29,29 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
         if ((isUpdateForm && !field.disableForUpdate) || (!isUpdateForm && !field.disableForForm)) {
           field.name = key;
           if (!field.label) field.label = key;
+
+          // Auto-fill employee name for current user
+          if (key === 'employeeName' && currentUser) {
+            field.defaultValue =
+              currentUser.fullName || currentUser.name || currentUser.employeeName;
+            field.autoFilled = true;
+          }
+
           if (field.hasFeedback)
             return (
-              <FormElement feedback={feedback} setFeedback={setFeedback} key={key} field={field} />
+              <FormElement
+                feedback={feedback}
+                setFeedback={setFeedback}
+                key={key}
+                field={field}
+                currentUser={currentUser}
+              />
             );
           else if (feedback && field.feedback) {
-            if (feedback == field.feedback) return <FormElement key={key} field={field} />;
+            if (feedback == field.feedback)
+              return <FormElement key={key} field={field} currentUser={currentUser} />;
           } else {
-            return <FormElement key={key} field={field} />;
+            return <FormElement key={key} field={field} currentUser={currentUser} />;
           }
         }
       })}
@@ -37,7 +59,7 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
   );
 }
 
-function FormElement({ field, feedback, setFeedback }) {
+function FormElement({ field, feedback, setFeedback, currentUser }) {
   const translate = useLanguage();
   const money = useMoney();
   const { dateFormat } = useDate();
@@ -283,6 +305,39 @@ function FormElement({ field, feedback, setFeedback }) {
     );
   };
 
+  // Special component for employee name to show it as read-only when auto-filled
+  const EmployeeNameComponent = () => {
+    const employeeName = field.defaultValue || currentUser?.fullName || currentUser?.name || '';
+
+    console.log('EmployeeNameComponent - Employee Name:', employeeName);
+    console.log('EmployeeNameComponent - Current User:', currentUser);
+    console.log('EmployeeNameComponent - Field:', field);
+
+    return (
+      <Form.Item
+        label={translate(field.label)}
+        name={field.name}
+        rules={[
+          {
+            required: field.required || false,
+            type: fieldType[field.type] ?? 'any',
+          },
+        ]}
+        initialValue={employeeName}
+      >
+        <Input
+          autoComplete="off"
+          disabled={true} // Always disable for auto-fill
+          placeholder={field.placeholder || 'Employee Name'}
+          style={{
+            backgroundColor: '#f5f5f5',
+            color: '#666',
+          }}
+        />
+      </Form.Item>
+    );
+  };
+
   const formItemComponent = {
     select: <SelectComponent />,
     selectWithTranslation: <SelectWithTranslationComponent />,
@@ -290,11 +345,11 @@ function FormElement({ field, feedback, setFeedback }) {
       <SelectWithFeedbackComponent lanchFeedback={setFeedback} feedbackValue={feedback} />
     ),
     color: <ColorComponent />,
-
     tag: <TagComponent />,
     array: <ArrayComponent />,
     country: <CountryComponent />,
     search: <SearchComponent />,
+    employeeName: <EmployeeNameComponent />, // Special component for employee name
   };
 
   const compunedComponent = {
@@ -320,7 +375,17 @@ function FormElement({ field, feedback, setFeedback }) {
     number: <InputNumber style={{ width: '100%' }} prefix={'₹'} />,
     phone: <Input style={{ width: '100%' }} placeholder="+1 123 456 789" />,
     comment: <Input autoComplete="off" placeholder="Enter your comment" />,
-    employeeName: <Input autoComplete="off" placeholder="Enter your name" />,
+    employeeName: (
+      <Input
+        autoComplete="off"
+        defaultValue={currentUser?.fullName || currentUser?.name || currentUser?.employeeName || ''}
+        disabled={field.autoFilled}
+        style={{
+          backgroundColor: field.autoFilled ? '#f5f5f5' : 'white',
+          color: field.autoFilled ? '#666' : 'inherit',
+        }}
+      />
+    ),
     boolean: (
       <Switch
         checkedChildren={<CheckOutlined />}
@@ -405,6 +470,7 @@ function FormElement({ field, feedback, setFeedback }) {
           },
         ]}
         valuePropName={field.type === 'boolean' ? 'checked' : 'value'}
+        initialValue={field.initialValue}
       >
         {renderComponent}
       </Form.Item>

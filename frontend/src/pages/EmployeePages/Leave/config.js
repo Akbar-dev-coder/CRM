@@ -1,8 +1,9 @@
 export const fields = {
   employeeName: {
     type: 'employeeName',
-    label: 'Name',
-    required: true,
+    label: 'Employee Name',
+    disableForForm: false,
+    disableForUpdate: true,
   },
   leaveType: {
     type: 'select',
