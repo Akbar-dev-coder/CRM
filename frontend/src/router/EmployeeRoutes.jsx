@@ -9,6 +9,7 @@ const Dashboard = lazy(() => import('@/pages/EmployeePages/dashboard'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Attendance = lazy(() => import('@/pages/EmployeePages/Attendance'));
 const Leave = lazy(() => import('@/pages/EmployeePages/Leave'));
+const Payslip = lazy(() => import('@/pages/EmployeePages/Payslip'));
 
 const employeeRoutes = [
   {
@@ -36,6 +37,14 @@ const employeeRoutes = [
     element: (
       <ProtectedRoute allowedRoles={['employee']}>
         <Leave />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/payslip',
+    element: (
+      <ProtectedRoute allowedRoles={['employee']}>
+        <Payslip />
       </ProtectedRoute>
     ),
   },

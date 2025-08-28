@@ -2,9 +2,12 @@ import CrudModule from '@/modules/CrudModule/CrudModule';
 import DynamicForm from '@/forms/DynamicForm';
 import { fields } from './config';
 import useLanguage from '@/locale/useLanguage';
+import dayjs from 'dayjs';
+import { useDate } from '@/settings';
 
 export default function Attendance() {
   const translate = useLanguage();
+  const { dateFormat } = useDate();
   const entity = 'employeeLeave';
   const searchConfig = {
     displayLabels: ['name'],
@@ -44,12 +47,16 @@ export default function Attendance() {
     {
       title: 'From',
       dataIndex: 'startDate',
-      render: (date) => new Date(date).toLocaleDateString(),
+      render: (date) => {
+        return dayjs(date).format(dateFormat);
+      },
     },
     {
       title: 'to',
       dataIndex: 'endDate',
-      render: (date) => new Date(date).toLocaleDateString(),
+      render: (date) => {
+        return dayjs(date).format(dateFormat);
+      },
     },
     {
       title: 'Admin Comment',

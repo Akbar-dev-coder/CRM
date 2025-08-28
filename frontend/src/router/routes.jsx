@@ -32,6 +32,7 @@ const Profile = lazy(() => import('@/pages/Profile'));
 const About = lazy(() => import('@/pages/About'));
 const Attendance = lazy(() => import('@/pages/Attendance'));
 const Leaves = lazy(() => import('@/pages/Leaves'));
+const Payroll = lazy(() => import('@/pages/Payroll'));
 // let routes = {
 //   expense: [],
 //   default: [
@@ -185,6 +186,14 @@ const adminRoutes = [
     element: (
       <ProtectedRoute allowedRoles={['owner']}>
         <Leaves />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/payroll',
+    element: (
+      <ProtectedRoute allowedRoles={['owner']}>
+        <Payroll />
       </ProtectedRoute>
     ),
   },

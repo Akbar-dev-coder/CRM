@@ -1,9 +1,12 @@
 import CrudModule from '@/modules/CrudModule/CrudModule';
 
 import useLanguage from '@/locale/useLanguage';
+import dayjs from 'dayjs';
+import { useDate } from '@/settings';
 
 export default function Attendance() {
   const translate = useLanguage();
+  const { dateFormat } = useDate();
   const entity = 'employeeAttendance';
   const searchConfig = {
     displayLabels: ['name'],
@@ -38,7 +41,9 @@ export default function Attendance() {
       title: 'Attendance Date',
       dataIndex: 'attendanceDate',
       key: 'attendanceDate',
-      render: (date) => new Date(date).toLocaleDateString(),
+      render: (date) => {
+        return dayjs(date).format(dateFormat);
+      },
     },
     {
       title: 'Shift',
@@ -54,7 +59,9 @@ export default function Attendance() {
       title: 'Check In Date',
       dataIndex: 'checkInDate',
       key: 'checkInDate',
-      render: (checkInDate) => new Date(checkInDate).toLocaleDateString(),
+      render: (date) => {
+        return dayjs(date).format(dateFormat);
+      },
     },
     {
       title: 'Check In',
@@ -65,7 +72,9 @@ export default function Attendance() {
       title: 'Check Out Date',
       dataIndex: 'checkOutDate',
       key: 'checkOutDate',
-      render: (checkOutDate) => new Date(checkOutDate).toLocaleDateString(),
+      render: (date) => {
+        return dayjs(date).format(dateFormat);
+      },
     },
     {
       title: 'Check Out',

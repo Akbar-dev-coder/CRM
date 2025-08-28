@@ -24,10 +24,12 @@ import { useMoney, useDate } from '@/settings';
 import { generate as uniqueId } from 'shortid';
 
 import { useCrudContext } from '@/context/crud';
+import dayjs from 'dayjs';
 
 function AddNewItem({ config }) {
   const { crudContextAction } = useCrudContext();
   const { collapsedBox, panel } = crudContextAction;
+  const { dateFormat } = useDate();
   const { ADD_NEW_ENTITY } = config;
 
   const handelClick = () => {
@@ -48,6 +50,7 @@ export default function DataTable({ config, extra = [] }) {
   const translate = useLanguage();
   const { moneyFormatter } = useMoney();
   const { dateFormat } = useDate();
+  const dateColumns = ['dob', 'joiningDate', 'attendanceDate', 'checkInDate', 'checkOutDate'];
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -77,7 +80,14 @@ export default function DataTable({ config, extra = [] }) {
     const cleanData = flattenedDataSource.map((row) => {
       const filterRow = {};
       exportkey.forEach((key) => {
-        filterRow[headerMap[key]] = row[key];
+        let value = row[key];
+
+        // format date fields
+        if (value && dateColumns.includes(key) && !isNaN(Date.parse(value))) {
+          value = dayjs(value).format(dateFormat);
+        }
+
+        filterRow[headerMap[key]] = value;
       });
       return filterRow;
     });
@@ -104,9 +114,14 @@ export default function DataTable({ config, extra = [] }) {
     const tableColumns = exportKey.map((key) => headerMap[key]);
     const tableRows = flattenedDataSource.map((row) =>
       exportKey.map((key) => {
-        const value = row[key];
+        let value = row[key];
         // Handle null/undefined values and convert to string
         if (value === null || value === undefined) return '';
+
+        // format date fields
+        if (value && dateColumns.includes(key) && !isNaN(Date.parse(value))) {
+          value = dayjs(value).format(dateFormat);
+        }
 
         const stringValue = String(value);
 
@@ -154,7 +169,7 @@ export default function DataTable({ config, extra = [] }) {
           }
         });
 
-        // Convert character count to approximate width (rough estimation: 1 char ≈ 1.8mm at font size 7)
+        // Convert character count to approximate width
         const estimatedWidth = Math.max(
           minWidth,
           Math.min(maxWidth, maxContentLength * 1.8 + padding)
@@ -333,7 +348,10 @@ export default function DataTable({ config, extra = [] }) {
     },
   ];
   items = items.filter((item) => {
-    if (item.key === 'edit' && config.allowEdit === false) {
+    if (
+      (item.key === 'edit' && config.allowEdit === false) ||
+      (item.key === 'delete' && config.allowDelete === false)
+    ) {
       return false;
     }
     return true;

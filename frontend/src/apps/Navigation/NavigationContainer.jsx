@@ -74,6 +74,11 @@ function Sidebar({ collapsible, isMobile = false }) {
       label: <Link to="/leave">{translate('leave requests')}</Link>,
     },
     {
+      key: 'payroll',
+      icon: <CreditCardOutlined />,
+      label: <Link to="/payroll">{translate('payroll')}</Link>,
+    },
+    {
       key: 'invoice',
       icon: <ContainerOutlined />,
       label: <Link to="/invoice">{translate('invoices')}</Link>,
@@ -122,6 +127,11 @@ function Sidebar({ collapsible, isMobile = false }) {
       key: 'leave',
       icon: <ContainerOutlined />,
       label: <Link to="/leave">{translate('My Leaves')}</Link>,
+    },
+    {
+      key: 'payslip',
+      icon: <ContainerOutlined />,
+      label: <Link to="/payslip">{translate('My Payslip')}</Link>,
     },
     {
       key: 'about',

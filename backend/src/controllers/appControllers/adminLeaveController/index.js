@@ -92,3 +92,30 @@ exports.update = async (req, res) => {
     });
   }
 };
+
+exports.delete = async (req, res) => {
+  try {
+    const leave = await Leave.findByIdAndDelete(req.params.id);
+
+    if (!leave) {
+      return res.status(404).json({
+        success: false,
+        result: null,
+        message: 'Leave request not found or already deleted',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      result: leave,
+      message: 'Leave request deleted successfully',
+    });
+  } catch (error) {
+    console.log('Error deleting leave request: ', error);
+    return res.status(500).json({
+      success: false,
+      result: null,
+      message: 'Internal server error',
+    });
+  }
+};

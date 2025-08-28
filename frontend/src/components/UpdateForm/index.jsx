@@ -53,6 +53,12 @@ export default function UpdateForm({ config, formElements, withUpload = false })
           joiningDate: dayjs(newValues['joiningDate']),
         };
       }
+      if (newValues.month) {
+        newValues = {
+          ...newValues,
+          month: dayjs(newValues['month']),
+        };
+      }
       if (newValues.dateOfBirth) {
         newValues = {
           ...newValues,
