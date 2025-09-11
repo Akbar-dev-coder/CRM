@@ -49,7 +49,7 @@ export default function Payment() {
       },
     },
     {
-      title: translate('Number'),
+      title: translate('Invoice Number'),
       dataIndex: ['invoice', 'number'],
     },
     {

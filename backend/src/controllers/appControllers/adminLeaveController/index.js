@@ -5,11 +5,25 @@ exports.list = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-    const status = req.query.status;
+    const { status, q, fields } = req.query;
 
     let query = {};
     if (status) {
       query.status = status;
+    }
+
+    if (q) {
+      let fieldArray = [];
+      if (Array.isArray(fields)) {
+        fieldArray = fields;
+      } else if (typeof fields === 'string') {
+        fieldArray = fields.split(',');
+      } else {
+        fieldArray = ['employeeName'];
+      }
+      query.$or = fieldArray.map((field) => ({
+        [field]: { $regex: new RegExp(q, 'i') },
+      }));
     }
 
     const totalCount = await Leave.countDocuments(query);
@@ -112,6 +126,53 @@ exports.delete = async (req, res) => {
     });
   } catch (error) {
     console.log('Error deleting leave request: ', error);
+    return res.status(500).json({
+      success: false,
+      result: null,
+      message: 'Internal server error',
+    });
+  }
+};
+
+exports.search = async (req, res) => {
+  try {
+    let fieldArray = [];
+
+    if (Array.isArray(req.query.fields)) {
+      fieldArray = req.query.fields;
+    } else if (typeof req.query.fields === 'string') {
+      fieldArray = req.query.fields.split(',');
+    } else {
+      fieldArray = ['employeeName'];
+    }
+
+    const fields = { $or: [] };
+
+    for (const field of fieldArray) {
+      fields.$or.push({ [field]: { $regex: new RegExp(req.query.q, 'i') } });
+    }
+
+    let results = await Leave.find({
+      ...fields,
+    })
+      .limit(20)
+      .exec();
+
+    if (results.length >= 1) {
+      return res.status(200).json({
+        success: true,
+        result: results,
+        message: 'Successfully found all documents',
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        result: [],
+        message: 'No document found by this request',
+      });
+    }
+  } catch (error) {
+    console.log('Error in search:', error);
     return res.status(500).json({
       success: false,
       result: null,

@@ -3,7 +3,21 @@ const Employee = require('@/models/appModels/Employee');
 
 exports.create = async (req, res) => {
   try {
-    const { employeeId, month, batch, allowances, deductions, bonuses, status } = req.body;
+    const {
+      employeeId,
+      month,
+      otherAllowance,
+      specialAllowances,
+      tds,
+      profTax,
+      effectiveWorkDays,
+      daysInMonth,
+      lop,
+      location,
+      pfUan,
+      pfNo,
+      status,
+    } = req.body;
 
     // Check if employee exists
     const employee = await Employee.findById(employeeId);
@@ -35,11 +49,20 @@ exports.create = async (req, res) => {
       employeeEmail: employee.email,
       employeeCode: employee.employeeId,
       month,
-      batch,
+      // batch,
       basicSalary: employee.basicSalary,
-      allowances: allowances || 0,
-      deductions: deductions || 0,
-      bonuses: bonuses || 0,
+      specialAllowances: specialAllowances || 0,
+      // deductions: deductions || 0,
+      // bonuses: bonuses || 0,
+      otherAllowance: otherAllowance || 0,
+      profTax: profTax || 0,
+      tds: tds || 0,
+      effectiveWorkDays: effectiveWorkDays || 0,
+      daysInMonth: daysInMonth || 0,
+      lop: lop || 0,
+      location: location || '',
+      pfUan: pfUan || '',
+      pfNo: pfNo || '',
       status: status || 'Unpaid',
       generatedBy: req.user?.fullName || req.user?.email || 'admin',
     });
@@ -65,13 +88,27 @@ exports.list = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const { status, month } = req.query;
+    const { status, month, q, fields } = req.query;
     let query = {};
     if (status) {
       query.status = status;
     }
     if (month) {
       query.month = month;
+    }
+
+    if (q) {
+      let fieldArray = [];
+      if (Array.isArray(fields)) {
+        fieldArray = fields;
+      } else if (typeof fields === 'string') {
+        fieldArray = fields.split(',');
+      } else {
+        fieldArray = ['employeeName, employeeCode'];
+      }
+      query.$or = fieldArray.map((field) => ({
+        [field]: { $regex: new RegExp(q, 'i') },
+      }));
     }
 
     const totalCount = await Payslip.countDocuments(query);
@@ -105,7 +142,18 @@ exports.list = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const { id } = req.params;
-    const { status, allowances, deductions, bonuses } = req.body;
+    const {
+      status,
+      specialAllowances,
+      otherAllowance,
+      tds,
+      profTax,
+      effectiveWorkDays,
+      daysInMonth,
+      lop,
+      pfUan,
+      pfNo,
+    } = req.body;
 
     // Validate status if provided
     if (status && !['Paid', 'Unpaid'].includes(status)) {
@@ -125,13 +173,19 @@ exports.update = async (req, res) => {
     //apply updated
 
     if (status) payslip.status = status;
-    if (allowances !== undefined) payslip.allowances = allowances;
-    if (deductions !== undefined) payslip.deductions = deductions;
-    if (bonuses !== undefined) payslip.bonuses = bonuses;
+    if (specialAllowances !== undefined) payslip.specialAllowances = specialAllowances;
+    if (otherAllowance !== undefined) payslip.otherAllowance = otherAllowance;
+    if (tds !== undefined) payslip.tds = tds;
+    if (profTax !== undefined) payslip.profTax = profTax;
+    if (effectiveWorkDays !== undefined) payslip.effectiveWorkDays = effectiveWorkDays;
+    if (daysInMonth !== undefined) payslip.daysInMonth = daysInMonth;
+    if (lop !== undefined) payslip.lop = lop;
+    if (pfUan !== undefined) payslip.pfUan = pfUan;
+    if (pfNo !== undefined) payslip.pfNo = pfNo;
 
     // Recalculate gross and net salary
-    payslip.grossSalary = payslip.basicSalary + payslip.allowances + payslip.bonuses;
-    payslip.netSalary = payslip.grossSalary - payslip.deductions;
+    // payslip.grossSalary = payslip.basicSalary + payslip.specialAllowances + payslip.hra + payslip.otherAllowance;
+    // payslip.netSalary = payslip.grossSalary - payslip.tds - payslip.profTax;
 
     await payslip.save();
     const updatedPayslip = await Payslip.findById(id).populate(
@@ -240,3 +294,50 @@ exports.read = async (req, res) => {
 //     return res.status(500).json({ success: false, message: 'Internal server error' });
 //   }
 // };
+
+exports.search = async (req, res) => {
+  try {
+    let fieldArray = [];
+
+    if (Array.isArray(req.query.fields)) {
+      fieldArray = req.query.fields;
+    } else if (typeof req.query.fields === 'string') {
+      fieldArray = req.query.fields.split(',');
+    } else {
+      fieldArray = ['name'];
+    }
+
+    const fields = { $or: [] };
+
+    for (const field of fieldArray) {
+      fields.$or.push({ [field]: { $regex: new RegExp(req.query.q, 'i') } });
+    }
+
+    let results = await Payslip.find({
+      ...fields,
+    })
+      .limit(20)
+      .exec();
+
+    if (results.length >= 1) {
+      return res.status(200).json({
+        success: true,
+        result: results,
+        message: 'Successfully found all documents',
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        result: [],
+        message: 'No document found by this request',
+      });
+    }
+  } catch (error) {
+    console.log('Error in search:', error);
+    return res.status(500).json({
+      success: false,
+      result: null,
+      message: 'Internal server error',
+    });
+  }
+};

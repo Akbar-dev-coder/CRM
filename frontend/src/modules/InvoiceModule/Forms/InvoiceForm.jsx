@@ -36,21 +36,27 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
   const [currentYear, setCurrentYear] = useState(() => new Date().getFullYear());
   const [lastNumber, setLastNumber] = useState(() => last_invoice_number + 1);
 
-  useEffect(() => {
-    if (current) {
-      const { cgstRate = 0, sgstRate = 0, igstRate = 0, year, number } = current;
-      setCgstRate(cgstRate / 100);
-      setSgstRate(sgstRate / 100);
-      setIgstRate(igstRate / 100);
-      setCurrentYear(year);
-      setLastNumber(number);
-    }
-  }, [current]);
+  // get from instance to watch currency changes
+
+  const form = Form.useFormInstance();
+
+  // useEffect(() => {
+  //   if (current) {
+  //     const { cgstRate = 0, sgstRate = 0, igstRate = 0, year, number } = current;
+  //     setCgstRate(cgstRate / 100);
+  //     setSgstRate(sgstRate / 100);
+  //     setIgstRate(igstRate / 100);
+  //     setCurrentYear(year);
+  //     setLastNumber(number);
+  //   }
+  // }, [current]);
 
   const addField = useRef(false);
 
   useEffect(() => {
-    addField.current.click();
+    if (addField.current) {
+      addField.current.click();
+    }
   }, []);
 
   const [invoiceCurrency, setInvoiceCurrency] = useState('INR');
@@ -85,6 +91,30 @@ function LoadInvoiceForm({ subTotal = 0, current = null }) {
   //   setTaxTotal(Number.parseFloat(calculate.multiply(subTotal, taxRate)));
   //   setTotal(Number.parseFloat(currentTotal));
   // }, [subTotal, taxRate]);
+
+  //watch for currency changes in form
+
+  const watchedCurrency = Form.useWatch('currency', form);
+
+  useEffect(() => {
+    if (watchedCurrency) {
+      setInvoiceCurrency(watchedCurrency);
+    }
+  }, [watchedCurrency]);
+
+  useEffect(() => {
+    if (current) {
+      const { cgstRate = 0, sgstRate = 0, igstRate = 0, year, number, currency = 'INR' } = current;
+
+      setCgstRate(cgstRate / 100);
+      setSgstRate(sgstRate / 100);
+      setIgstRate(igstRate / 100);
+      setCurrentYear(year);
+      setLastNumber(number);
+      setInvoiceCurrency(currency);
+    }
+  }, [current]);
+
   useEffect(() => {
     const cgst = calculate.multiply(subTotal, cgstRate);
     const sgst = calculate.multiply(subTotal, sgstRate);

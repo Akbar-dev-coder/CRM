@@ -1,0 +1,267 @@
+html
+    head
+        link(rel="shortcut icon" type="image/png" href="public/uploads/setting/logo.png")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        style.
+            body {
+                width: 100%;
+                font-family: Arial, sans-serif;
+                font-size: 11px;
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .sheet {
+                width: 100%;
+                padding: 20px;
+                margin: 0 auto;
+                box-sizing: border-box;
+                border-collapse: collapse;
+            }
+
+            .header {
+                width: 100%;
+                text-align: center;
+                border: 1px solid #000;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+                overflow: hidden;
+            }
+
+            .logo-container {
+                width: 18%;
+                float: left;
+                text-align: left;
+            }
+            .logo {
+                width: 100%;
+                max-height: 80px;
+                margin-left: 10px;
+            }
+
+            .company-info {
+                width: 82%;
+                float: right;
+                text-align: center;
+            }
+
+            .company-name {
+                font-size: 16px;
+                font-weight: bold;
+                margin: 0;
+                text-transform: uppercase;
+            }
+            .company-address {
+                font-size: 11px;
+                margin: 3px 0;
+            }
+            .payslip-title {
+                font-size: 13px;
+                font-weight: bold;
+                margin: 8px 0;
+            }
+
+            .employee-info {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .info-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 11px;
+            }
+            .info-table td {
+                padding: 4px 8px;
+                border: 1px solid #000;
+                vertical-align: top;
+            }
+            .info-left {
+                width: 50%;
+            }
+            .info-right {
+                width: 50%;
+            }
+            .label {
+                font-weight: bold;
+            }
+
+            .salary-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 11px;
+                margin-bottom: 20px;
+                border: 1px solid #000;
+            }
+            .salary-table th {
+                background-color: #f0f0f0;
+                padding: 6px;
+                border: 1px solid #000;
+                text-align: center;
+                font-weight: bold;
+            }
+            .salary-table td {
+                padding: 6px 8px;
+                border: 1px solid #000;
+                text-align: right;
+            }
+            .salary-table td.text-left {
+                text-align: left;
+            }
+            .total-row {
+                font-weight: bold;
+                background-color: #f9f9f9;
+            }
+
+            .net-pay {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 12px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .net-pay td {
+                padding: 8px;
+                border: 1px solid #000;
+                text-align: left;
+            }
+
+            .amount-words {
+                font-size: 11px;
+                text-align: left;
+                margin-bottom: 15px;
+                font-style: italic;
+            }
+
+            .footer {
+                font-size: 11px;
+                text-align: center;
+                color: #000;
+                margin-top: 30px;
+            }
+
+    body
+        .sheet
+            .header
+                .logo-container
+                    img.logo(src=settings.public_server_file+settings.company_logo)
+                .company-info
+                    h1.company-name #{settings.company_name}
+                    p.company-address #{settings.company_address }
+                    p.company-address #{settings.company_state } #{settings.company_country}
+                    h2.payslip-title Payslip for the month of #{moment(model.month).format('MMMM YYYY')}
+               
+            .employee-info
+                table.info-table
+                    tr
+                        td.info-left
+                            span.label Employee Code: 
+                            span #{model.employeeCode || model.employeeId.employeeId || '-'}
+                        td.info-right
+                            span.label Bank Name: 
+                            span #{model.employeeId.bankName ? model.employeeId.bankName.toUpperCase() : '-'}
+                    tr
+                        td.info-left
+                            span.label Name: 
+                            span #{model.employeeName || model.employeeId.fullName}
+                        td.info-right
+                            span.label Bank Account No.: 
+                            span #{model.employeeId.bankAccountNumber || '-'}
+                    tr
+                        td.info-left
+                            span.label Join Date: 
+                            span #{model.employeeId.joiningDate ? moment(model.employeeId.joiningDate).format('DD MMM YYYY') : '-'}
+                        td.info-right
+                            span.label PF No.: 
+                            span #{model.pfNo || '-'}
+                    tr
+                        td.info-left
+                            span.label Designation: 
+                            span #{model.employeeId.designation || '-'}
+                        td.info-right
+                            span.label PF UAN No: 
+                            span #{model.pfUan || '-'}
+                    tr
+                        td.info-left
+                            span.label Department: 
+                            span #{model.employeeId.department || '-'}
+                        td.info-right
+                            span.label PAN No.: 
+                            span #{model.employeeId.panNo || '-'}
+                    tr
+                        td.info-left
+                            span.label Effective Work Days: 
+                            span #{model.effectiveWorkDays || 0}
+                        td.info-right
+                            span.label LOP: 
+                            span #{model.lop || '0'}
+                    tr
+                        td.info-left
+                            span.label Days In Month: 
+                            span #{model.daysInMonth || 0}
+                        td.info-right
+                            span.label Location: 
+                            span #{model.location || settings.company_city || '-'}
+
+            //- Salary & deductions calculation
+            - var basicSalary = model.basicSalary || 0
+            - var hra = Math.round(basicSalary * 0.5)
+            - var specialAllowance = model.specialAllowances || 0
+            - var otherAllowance = model.otherAllowance || 0
+            - var totalEarnings = basicSalary + hra + specialAllowance + otherAllowance
+            - var profTax = model.profTax || 0
+            - var tds = model.tds || (model.deductions - profTax > 0 ? model.deductions - profTax : 0)
+            - var totalDeductions = model.deductions || 0
+            - var netPay = model.netSalary || (totalEarnings - totalDeductions)
+
+            table.salary-table
+                thead
+                    tr
+                        th(rowspan="2") Earnings
+                        th Full
+                        th Actual
+                        th(rowspan="2") Deductions
+                        th Actual
+                tbody
+                    tr
+                        td.text-left BASIC
+                        td #{moneyFormatter({amount: basicSalary})}
+                        td #{moneyFormatter({amount: basicSalary})}
+                        td.text-left PROF TAX
+                        td #{moneyFormatter({amount: profTax})}
+                    tr
+                        td.text-left HRA
+                        td #{moneyFormatter({amount: hra})}
+                        td #{moneyFormatter({amount: hra})}
+                        td.text-left TDS
+                        td #{moneyFormatter({amount: tds})}
+                    tr
+                        td.text-left SPECIAL ALLOWANCE
+                        td #{specialAllowance > 0 ? moneyFormatter({amount: specialAllowance}) : '-'}
+                        td #{specialAllowance > 0 ? moneyFormatter({amount: specialAllowance}) : '-'}
+                        td.text-left
+                        td
+                    tr
+                        td.text-left OTHER ALLOWANCE
+                        td #{otherAllowance > 0 ? moneyFormatter({amount: otherAllowance}) : '-'}
+                        td #{otherAllowance > 0 ? moneyFormatter({amount: otherAllowance}) : '-'}
+                        td.text-left
+                        td
+                    tr.total-row
+                        td.text-left Total Earnings: INR.
+                        td #{moneyFormatter({amount: model.grossSalary || totalEarnings})}
+                        td #{moneyFormatter({amount: model.grossSalary || totalEarnings})}
+                        td.text-left Total Deductions: INR.
+                        td #{moneyFormatter({amount: totalDeductions})}
+
+            table.net-pay
+                tr
+                    td Net Pay for the month (Total Earnings - Total Deductions): #{moneyFormatter({amount: netPay})}
+
+            .amount-words
+                - var amountInWords = numberToWords(Math.floor(netPay))
+                p (Rupees #{amountInWords} only)
+
+            .footer
+                p This is a system generated payslip and does not require signature.

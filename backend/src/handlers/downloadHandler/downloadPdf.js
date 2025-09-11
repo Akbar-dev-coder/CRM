@@ -3,12 +3,35 @@ const mongoose = require('mongoose');
 
 module.exports = downloadPdf = async (req, res, { directory, id }) => {
   try {
-    const modelName = directory.slice(0, 1).toUpperCase() + directory.slice(1);
+    let entity = directory;
+
+    //map payroll -> payslip for admin donwload
+
+    if (entity === 'payroll') {
+      entity = 'payslip';
+    }
+    const modelName = entity.slice(0, 1).toUpperCase() + entity.slice(1);
     if (mongoose.models[modelName]) {
       const Model = mongoose.model(modelName);
-      const result = await Model.findOne({
-        _id: id,
-      }).exec();
+
+      let result;
+
+      // special handling for payslip to populated employee data
+
+      if (modelName === 'Payslip') {
+        result = await Model.findOne({
+          _id: id,
+        })
+          .populate(
+            'employeeId',
+            'fullName employeeId email phone department designation basicSalary bankName bankAccountNumber bankIFSC panNo aadhaarNo joiningDate'
+          )
+          .exec();
+      } else {
+        result = await Model.findOne({
+          _id: id,
+        }).exec();
+      }
 
       // Throw error if no result
       if (!result) {

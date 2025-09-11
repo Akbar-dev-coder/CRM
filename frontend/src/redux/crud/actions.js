@@ -205,16 +205,24 @@ export const crud = {
         keyState: 'search',
         payload: null,
       });
-
+      console.log(' Search Action - Entity:', entity);
+      console.log(' Search Action - Options:', options);
       let data = await request.search({ entity, options });
-
+      console.log(' Search Action - Response:', data);
+      console.log(' Search Action - Success:', data.success);
+      console.log(' Search Action - Result:', data.result);
+      console.log('Redux search action:', typeof data?.result);
+      console.log('Redux search action:', Array.isArray(data?.result));
       if (data.success === true) {
         dispatch({
           type: actionTypes.REQUEST_SUCCESS,
           keyState: 'search',
           payload: data.result,
         });
+        console.log('REDUX SEARCH ACTION - SUCCESS dispatched');
       } else {
+        console.log('REDUX SEARCH ACTION - Search failed, dispatching FAILED');
+        console.log('REDUX SEARCH ACTION - Failed response:', data);
         dispatch({
           type: actionTypes.REQUEST_FAILED,
           keyState: 'search',

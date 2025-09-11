@@ -25,7 +25,9 @@ import useMail from '@/hooks/useMail';
 import { useNavigate } from 'react-router-dom';
 
 const Item = ({ item, currentErp }) => {
+  console.log('currentEErp', currentErp);
   const { moneyFormatter } = useMoney();
+
   return (
     <Row gutter={[12, 0]} key={item._id}>
       <Col className="gutter-row" span={11}>
@@ -122,6 +124,33 @@ export default function ReadItem({ config, selectedItem }) {
       setClient(currentErp.client);
     }
   }, [currentErp]);
+
+  const renderTaxLabel = () => {
+    if (currentErp.igstRate && currentErp.igstRate > 0) {
+      return `${translate('Tax Total')} (IGST${currentErp.igstRate}%)`;
+    }
+
+    if (currentErp.cgstRate && currentErp.sgstRate) {
+      const totalRate = (parseFloat(currentErp.sgstRate) + parseFloat(currentErp.cgstRate)).toFixed(
+        2
+      );
+      return `${translate('Tax Total')} (CGST${currentErp.cgstRate}% + SGST${
+        currentErp.sgstRate
+      }% = ${totalRate}%)`;
+    }
+
+    if (currentErp.cgstRate && currentErp.cgstRate > 0) {
+      return `${translate('Tax Total')} (CGST${currentErp.cgstRate}%)`;
+    }
+    if (currentErp.sgstRate && currentErp.sgstRate > 0) {
+      return `${translate('Tax Total')} (SGST${currentErp.sgstRate}%)`;
+    }
+    if (currentErp.taxRate && currentErp.taxRate > 0) {
+      return `${translate('Tax Total')}(${currentErp.taxRate}%)`;
+    }
+
+    return `${translate('Tax Total')}`;
+  };
 
   return (
     <>
@@ -298,9 +327,7 @@ export default function ReadItem({ config, selectedItem }) {
             </p>
           </Col>
           <Col className="gutter-row" span={12}>
-            <p>
-              {translate('Tax Total')} ({currentErp.taxRate} %) :
-            </p>
+            <p>{renderTaxLabel()} :</p>
           </Col>
           <Col className="gutter-row" span={12}>
             <p>

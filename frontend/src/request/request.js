@@ -168,7 +168,7 @@ const request = {
       query = query.slice(0, -1);
 
       const response = await axios.get(entity + '/list' + query);
-      console.log('payroll', response);
+      console.log('database response', response);
       successHandler(response, {
         notifyOnSuccess: false,
         notifyOnFailed: false,

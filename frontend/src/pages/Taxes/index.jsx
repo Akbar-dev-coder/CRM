@@ -6,18 +6,17 @@ import { Switch } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import CrudModule from '@/modules/CrudModule/CrudModule';
 import TaxForm from '@/forms/TaxForm';
-import { render } from 'react-dom';
 
 export default function Taxes() {
   const translate = useLanguage();
   const entity = 'taxes';
   const searchConfig = {
-    displayLabels: ['name'],
-    searchFields: 'name',
+    displayLabels: ['taxName'],
+    searchFields: ['taxName'],
     outputValue: '_id',
   };
 
-  const deleteModalLabels = ['name'];
+  const deleteModalLabels = ['taxName'];
 
   const readColumns = [
     {

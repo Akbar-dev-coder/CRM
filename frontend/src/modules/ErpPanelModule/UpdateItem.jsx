@@ -17,7 +17,6 @@ import { CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { settingsAction } from '@/redux/settings/actions';
-// import { StatusTag } from '@/components/Tag';
 
 function SaveForm({ form, translate }) {
   const handelClick = () => {
@@ -51,11 +50,11 @@ export default function UpdateItem({ config, UpdateForm }) {
     },
     subTotal: 0,
     taxTotal: 0,
-    // taxRate: 0,
     total: 0,
     credit: 0,
     number: 0,
     year: 0,
+    currency: 'INR',
   };
 
   const [currentErp, setCurrentErp] = useState(current ?? resetErp);
@@ -71,7 +70,6 @@ export default function UpdateItem({ config, UpdateForm }) {
         if (item) {
           if (item.quantity && item.price) {
             let total = calculate.multiply(item['quantity'], item['price']);
-            //sub total
             subTotal = calculate.add(subTotal, total);
           }
         }
@@ -93,12 +91,6 @@ export default function UpdateItem({ config, UpdateForm }) {
         dataToUpdate.purchaseOrderDate = dayjs(fieldsValue.purchaseOrderDate).toISOString();
       }
 
-      // if (fieldsValue.date || fieldsValue.expiredDate) {
-      //   dataToUpdate.date = dayjs(fieldsValue.date).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-      //   dataToUpdate.expiredDate = dayjs(fieldsValue.expiredDate).format(
-      //     'YYYY-MM-DDTHH:mm:ss.SSSZ'
-      //   );
-      // }
       if (fieldsValue.items) {
         let newList = [];
         fieldsValue.items.forEach((item) => {
@@ -112,6 +104,7 @@ export default function UpdateItem({ config, UpdateForm }) {
 
     dispatch(erp.update({ entity, id, jsonData: dataToUpdate }));
   };
+
   useEffect(() => {
     if (isSuccess) {
       form.resetFields();
@@ -125,6 +118,8 @@ export default function UpdateItem({ config, UpdateForm }) {
     if (current) {
       setCurrentErp(current);
       let formData = { ...current };
+
+      // Handle dates
       if (formData.date) {
         formData.date = dayjs(formData.date);
       }
@@ -134,19 +129,15 @@ export default function UpdateItem({ config, UpdateForm }) {
       if (formData.purchaseOrderDate) {
         formData.purchaseOrderDate = dayjs(formData.purchaseOrderDate);
       }
-      if (formData.cgstRate) formData.cgstRate = formData.cgstRate * 100;
-      if (formData.sgstRate) formData.sgstRate = formData.sgstRate * 100;
-      if (formData.igstRate) formData.igstRate = formData.igstRate * 100;
-
-      // if (!formData.taxRate) {
-      //   formData.taxRate = 0;
-      // }
 
       const { subTotal } = formData;
 
-      form.resetFields();
+      // Set form values first, then update subTotal
       form.setFieldsValue(formData);
-      setSubTotal(subTotal);
+
+      if (subTotal) {
+        setSubTotal(subTotal);
+      }
     }
   }, [current]);
 

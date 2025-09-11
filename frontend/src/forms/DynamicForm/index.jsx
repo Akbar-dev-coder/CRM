@@ -18,8 +18,8 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
   const currentUser = useSelector(selectCurrentUser);
 
   // Debug log
-  console.log('DynamicForm - Current User:', currentUser);
-  console.log('DynamicForm - Fields:', fields);
+  // console.log('DynamicForm - Current User:', currentUser);
+  // console.log('DynamicForm - Fields:', fields);
 
   return (
     <div>
@@ -308,10 +308,6 @@ function FormElement({ field, feedback, setFeedback, currentUser }) {
   // Special component for employee name to show it as read-only when auto-filled
   const EmployeeNameComponent = () => {
     const employeeName = field.defaultValue || currentUser?.fullName || currentUser?.name || '';
-
-    console.log('EmployeeNameComponent - Employee Name:', employeeName);
-    console.log('EmployeeNameComponent - Current User:', currentUser);
-    console.log('EmployeeNameComponent - Field:', field);
 
     return (
       <Form.Item

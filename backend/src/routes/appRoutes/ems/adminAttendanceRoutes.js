@@ -6,6 +6,7 @@ const adminAttendanceController = require('@/controllers/appControllers/adminAtt
 // router.post('/create', adminAuth.isValidAuthToken, adminAttendanceController.create);
 router.get('/list', adminAuth.isValidAuthToken, adminAttendanceController.list);
 router.delete('/delete/:id', adminAuth.isValidAuthToken, adminAttendanceController.delete);
+router.get('/search', adminAuth.isValidAuthToken, adminAttendanceController.search);
 // router.get('/read/:id', adminAuth.isValidAuthToken, adminAttendanceController.read);
 // router.patch('/update/:id', adminAuth.isValidAuthToken, adminAttendanceController.update);
 

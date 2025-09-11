@@ -11,6 +11,7 @@ export default function Attendance() {
   const searchConfig = {
     displayLabels: ['name'],
     searchFields: 'name',
+    outputValue: '_id',
   };
   const deleteModalLabels = ['name'];
 
@@ -33,10 +34,14 @@ export default function Attendance() {
     },
     {
       title: 'Employee Name',
-      dataIndex: 'employeeId',
-      key: 'employeeName',
-      render: (name) => name?.fullName || 'N/A',
+      dataIndex: 'name',
     },
+    // {
+    //   title: 'Employee Name',
+    //   dataIndex: 'employeeName',
+    //   key: 'employeeName',
+    //   render: (_, record) => record.employeeId?.fullName || 'N/A',
+    // },
     {
       title: 'Attendance Date',
       dataIndex: 'attendanceDate',
@@ -93,8 +98,8 @@ export default function Attendance() {
     },
     {
       title: 'Employee Name',
-      dataIndex: 'employeeName',
-      render: (name) => name.employeeId?.fullName || 'N/A',
+      dataIndex: 'name',
+      // render: (name) => name.employeeId?.fullName || 'N/A',
     },
     {
       title: 'Attendance Date',
@@ -143,6 +148,7 @@ export default function Attendance() {
     readColumns,
     allowCreate: false,
     allowEdit: false,
+    enableSearch: true,
   };
   return <CrudModule config={config} />;
 }

@@ -12,6 +12,7 @@ export default function Attendance() {
   const searchConfig = {
     displayLabels: ['name'],
     searchFields: 'employeeName',
+    outputValue: '_id',
   };
   const deleteModalLabels = ['name'];
 

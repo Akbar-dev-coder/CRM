@@ -15,26 +15,66 @@ export const fields = {
     required: true,
     placeholder: 'Select month',
   },
-  batch: {
+  // batch: {
+  //   type: 'string',
+  //   label: 'Batch',
+  //   placeholder: 'Enter batch',
+  //   required: false,
+  // },
+  specialAllowances: {
+    type: 'number',
+    label: 'Special Allowances',
+    placeholder: 'Enter special allowances',
+  },
+  otherAllowance: {
+    type: 'number',
+    label: 'Other Allowance',
+    placeholder: 'Enter other allowance',
+  },
+  // deductions: {
+  //   type: 'number',
+  //   label: 'Deductions',
+  //   placeholder: 'Enter deductions',
+  // },
+  profTax: {
+    type: 'number',
+    label: 'Professional Tax',
+    placeholder: 'Enter professional tax',
+  },
+  tds: {
+    type: 'number',
+    label: 'TDS',
+    placeholder: 'Enter TDS amount',
+  },
+  effectiveWorkDays: {
+    type: 'number',
+    label: 'Effective Work Days',
+    placeholder: 'Enter effective work days',
+  },
+  daysInMonth: {
+    type: 'number',
+    label: 'Days in Month',
+    placeholder: 'Enter days in month',
+  },
+  lop: {
+    type: 'number',
+    label: 'Loss of Pay',
+    placeholder: 'Enter loss of pay',
+  },
+  location: {
+    type: 'textarea',
+    label: 'Location',
+    placeholder: 'Enter location',
+  },
+  pfUan: {
     type: 'string',
-    label: 'Batch',
-    placeholder: 'Enter batch',
-    required: false,
+    label: 'PF UAN',
+    placeholder: 'Enter PF UAN',
   },
-  allowances: {
-    type: 'number',
-    label: 'Allowances',
-    placeholder: 'Enter allowances',
-  },
-  deductions: {
-    type: 'number',
-    label: 'Deductions',
-    placeholder: 'Enter deductions',
-  },
-  bonuses: {
-    type: 'number',
-    label: 'boonuses',
-    placeholder: 'Enter bonuses',
+  pfNo: {
+    type: 'string',
+    label: 'PF No',
+    placeholder: 'Enter PF No',
   },
   status: {
     type: 'select',

@@ -10,11 +10,21 @@ const search = async (Model, req, res) => {
   //     })
   //     .end();
   // }
-  const fieldsArray = req.query.fields ? req.query.fields.split(',') : ['name'];
+
+  let fieldArray = [];
+
+  if (Array.isArray(req.query.fields)) {
+    fieldArray = req.query.fields;
+  } else if (typeof req.query.fields === 'string') {
+    fieldArray = req.query.fields.split(',');
+  } else {
+    fieldArray = ['name'];
+  }
+  // const fieldsArray = req.query.fields ? req.query.fields.split(',') : ['name'];
 
   const fields = { $or: [] };
 
-  for (const field of fieldsArray) {
+  for (const field of fieldArray) {
     fields.$or.push({ [field]: { $regex: new RegExp(req.query.q, 'i') } });
   }
   // console.log(fields)

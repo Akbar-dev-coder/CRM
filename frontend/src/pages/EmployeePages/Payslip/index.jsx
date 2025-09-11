@@ -7,10 +7,10 @@ export default function Payslip() {
   const { dateFormat } = useDate();
   const entity = 'payslip';
   const searchConfig = {
-    displayLabels: ['name'],
-    searchFields: 'name',
+    displayLabels: ['employeeName', 'employeeCode', 'month'],
+    searchFields: 'employeeName,employeeCode,month',
   };
-  const deleteModalLabels = ['name'];
+  const deleteModalLabels = ['employeeName'];
 
   const Labels = {
     PANEL_TITLE: translate('payslip'),
@@ -22,21 +22,21 @@ export default function Payslip() {
 
   const dataTableColumns = [
     {
-      title: 'Id',
+      title: 'Employee Id',
       dataIndex: 'employeeCode',
     },
     {
       title: 'Name',
       dataIndex: 'employeeName',
     },
-    {
-      title: 'Email',
-      dataIndex: 'employeeEmail',
-    },
-    {
-      title: 'Batch',
-      dataIndex: 'batch',
-    },
+    // {
+    //   title: 'Email',
+    //   dataIndex: 'employeeEmail',
+    // },
+    // {
+    //   title: 'Batch',
+    //   dataIndex: 'batch',
+    // },
     {
       title: 'Month',
       dataIndex: 'month',
@@ -44,30 +44,31 @@ export default function Payslip() {
         return dayjs(date).format(dateFormat);
       },
     },
-    {
-      title: 'Basic Salary',
-      dataIndex: 'basicSalary',
-    },
-    {
-      title: 'Allowances',
-      dataIndex: 'allowances',
-    },
-    {
-      title: 'Bonuses',
-      dataIndex: 'bonuses',
-    },
-    {
-      title: 'Deductions',
-      dataIndex: 'deductions',
-    },
-    {
-      title: 'Gross Salary',
-      dataIndex: 'grossSalary',
-    },
-    {
-      title: 'Net Salary',
-      dataIndex: 'netSalary',
-    },
+
+    // {
+    //   title: 'Basic Salary',
+    //   dataIndex: 'basicSalary',
+    // },
+    // {
+    //   title: 'Allowances',
+    //   dataIndex: 'allowances',
+    // },
+    // {
+    //   title: 'Bonuses',
+    //   dataIndex: 'bonuses',
+    // },
+    // {
+    //   title: 'Deductions',
+    //   dataIndex: 'deductions',
+    // },
+    // {
+    //   title: 'Gross Salary',
+    //   dataIndex: 'grossSalary',
+    // },
+    // {
+    //   title: 'Net Salary',
+    //   dataIndex: 'netSalary',
+    // },
     {
       title: 'Pay Date',
       dataIndex: 'payDate',
@@ -93,39 +94,39 @@ export default function Payslip() {
       title: 'Employee Name',
       dataIndex: 'employeeName',
     },
-    {
-      title: 'Employee Email',
-      dataIndex: 'employeeEmail',
-    },
+    // {
+    //   title: 'Employee Email',
+    //   dataIndex: 'employeeEmail',
+    // },
     {
       title: 'Month',
       dataIndex: 'month',
       isDate: true,
     },
-    {
-      title: 'Basic Salary',
-      dataIndex: 'basicSalary',
-    },
-    {
-      title: 'Allowances',
-      dataIndex: 'allowances',
-    },
-    {
-      title: 'Bonuses',
-      dataIndex: 'bonuses',
-    },
-    {
-      title: 'Deductions',
-      dataIndex: 'deductions',
-    },
-    {
-      title: 'Gross Salary',
-      dataIndex: 'grossSalary',
-    },
-    {
-      title: 'Net Salary',
-      dataIndex: 'netSalary',
-    },
+    // {
+    //   title: 'Basic Salary',
+    //   dataIndex: 'basicSalary',
+    // },
+    // {
+    //   title: 'Allowances',
+    //   dataIndex: 'allowances',
+    // },
+    // {
+    //   title: 'Bonuses',
+    //   dataIndex: 'bonuses',
+    // },
+    // {
+    //   title: 'Deductions',
+    //   dataIndex: 'deductions',
+    // },
+    // {
+    //   title: 'Gross Salary',
+    //   dataIndex: 'grossSalary',
+    // },
+    // {
+    //   title: 'Net Salary',
+    //   dataIndex: 'netSalary',
+    // },
     {
       title: 'Pay Date',
       dataIndex: 'payDate',

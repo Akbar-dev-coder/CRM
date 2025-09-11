@@ -11,8 +11,10 @@ export default function Payroll() {
   const entity = 'payroll';
 
   const searchConfig = {
-    displayLabels: ['fullName'],
-    searchFields: 'FullName',
+    entity: 'payroll',
+    displayLabels: ['name'],
+    searchFields: 'employeeName',
+    outputValue: '_id',
   };
 
   const deleteModalLabels = ['name'];
@@ -55,19 +57,19 @@ export default function Payroll() {
         return dayjs(date).format(dateFormat);
       },
     },
-    {
-      title: 'Batch',
-      dataIndex: 'batch',
-      key: 'batch',
-    },
+    // {
+    //   title: 'Batch',
+    //   dataIndex: 'batch',
+    //   key: 'batch',
+    // },
     {
       title: 'Basic Salary',
       dataIndex: 'basicSalary',
     },
     {
-      title: 'Allowances',
-      dataIndex: 'allowances',
-      key: 'allowances',
+      title: 'Special Allowances',
+      dataIndex: 'specialAllowances',
+      key: 'specialAllowances',
     },
     {
       title: 'Deductions',
@@ -75,9 +77,29 @@ export default function Payroll() {
       key: 'deductions',
     },
     {
-      title: 'Bonuses',
-      dataIndex: 'bonuses',
-      key: 'bonuses',
+      title: 'Other Allowances',
+      dataIndex: 'otherAllowance',
+      key: 'otherAllowance',
+    },
+    {
+      title: 'Prof. Tax',
+      dataIndex: 'profTax',
+      key: 'profTax',
+    },
+    {
+      title: 'TDS',
+      dataIndex: 'tds',
+      key: 'tds',
+    },
+    {
+      title: 'Effective Work Days',
+      dataIndex: 'effectiveWorkDays',
+      key: 'effectiveWorkDays',
+    },
+    {
+      title: 'Days in Month',
+      dataIndex: 'daysInMonth',
+      key: 'daysInMonth',
     },
     {
       title: 'Gross Salary',
@@ -113,20 +135,20 @@ export default function Payroll() {
       key: 'month',
       isDate: true,
     },
-    {
-      title: 'Batch',
-      dataIndex: 'batch',
-      key: 'batch',
-    },
+    // {
+    //   title: 'Batch',
+    //   dataIndex: 'batch',
+    //   key: 'batch',
+    // },
     {
       title: 'Basic Salary',
       dataIndex: 'basicSalary',
       key: 'basicSalary',
     },
     {
-      title: 'Allowances',
-      dataIndex: 'allowances',
-      key: 'allowances',
+      title: 'Special Allowances',
+      dataIndex: 'specialAllowances',
+      key: 'specialAllowances',
     },
     {
       title: 'Deductions',
@@ -134,9 +156,29 @@ export default function Payroll() {
       key: 'deductions',
     },
     {
-      title: 'Bonuses',
-      dataIndex: 'bonuses',
-      key: 'bonuses',
+      title: 'Other Allowances',
+      dataIndex: 'otherAllowance',
+      key: 'otherAllowance',
+    },
+    {
+      title: 'Prof. Tax',
+      dataIndex: 'profTax',
+      key: 'profTax',
+    },
+    {
+      title: 'TDS',
+      dataIndex: 'tds',
+      key: 'tds',
+    },
+    {
+      title: 'Effective Work Days',
+      dataIndex: 'effectiveWorkDays',
+      key: 'effectiveWorkDays',
+    },
+    {
+      title: 'Days in Month',
+      dataIndex: 'daysInMonth',
+      key: 'daysInMonth',
     },
     {
       title: 'Gross Salary',

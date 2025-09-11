@@ -8,5 +8,6 @@ router.get('/list', adminAuth.isValidAuthToken, adminPayrollController.list);
 router.get('/read/:id', adminAuth.isValidAuthToken, adminPayrollController.read);
 router.delete('/delete/:id', adminAuth.isValidAuthToken, adminPayrollController.delete);
 router.patch('/update/:id', adminAuth.isValidAuthToken, adminPayrollController.update);
+router.get('/search', adminAuth.isValidAuthToken, adminPayrollController.search);
 
 module.exports = router;
