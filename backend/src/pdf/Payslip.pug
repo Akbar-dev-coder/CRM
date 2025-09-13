@@ -23,43 +23,47 @@ html
             .header {
                 width: 100%;
                 border: 1px solid #000;
+                padding: 10px;
                 margin-bottom: 20px;
-                overflow: hidden;
+                box-sizing: border-box;
+            }
+            .header-table{
+                display: table;
+                width: 100%;
             }
             .header-row {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                gap: 20px;
+                display: table-row;
             }
-
-            .logo-container {
-                flex: 0 0 100px; /* fixed logo width */
-                text-align: left;
+            .logo-cell,
+            .company-cell {
+                display: table-cell;
+                vertical-align: middle;
             }
-            .logo {
+            .logo-cell {
+                width: 120px;
+            }
+            .logo{
                 max-width: 100%;
                 max-height: 70px;
                 display: block;
             }
 
-            .company-info {
-                flex: 1;
+            .company-cell {
                 text-align: center;
             }
 
             .company-name {
-                font-size: 10px;
+                font-size: 8px;
                 font-weight: bold;
                 margin: 0;
                 text-transform: uppercase;
             }
             .company-address {
-                font-size: 8px;
+                font-size: 6px;
                 margin: 3px 0;
             }
             .payslip-title {
-                font-size: 10px;
+                font-size: 8px;
                 font-weight: bold;
                 margin: 8px 0;
             }
@@ -145,14 +149,15 @@ html
     body
         .sheet
             .header
-                .header-row
-                    .logo-container
-                        img.logo(src=settings.public_server_file+settings.company_logo)
-                    .company-info
-                        h1.company-name #{settings.company_name}
-                        p.company-address #{settings.company_address}
-                        p.company-address #{settings.company_state} #{settings.company_country}
-                        h2.payslip-title Payslip for the month of #{moment(model.month).format('MMMM YYYY')}
+                .header-table
+                    .header-row
+                        .logo-cell
+                            img.logo(src=settings.public_server_file+settings.company_logo)
+                        .company-cell
+                            h1.company-name #{settings.company_name}
+                            p.company-address #{settings.company_address}
+                            p.company-address #{settings.company_state} #{settings.company_country}
+                            h2.payslip-title Payslip for the month of #{moment(model.month).format('MMMM YYYY')}
 
                
             .employee-info
